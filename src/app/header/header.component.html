@@ -1,0 +1,65 @@
+<header class="header">
+  <nav>
+    <ul [ngClass]="{ navbar: true, mobileNavView: isMobileMenuVisible }">
+      <li>
+        <!-- <NavLink to="/Home" activeClassName={styles.active}> -->
+        <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" routerLink="/">
+          <h1>
+            Guild Manager
+            <fa-icon [icon]="faHome"></fa-icon>
+          </h1>
+        </a>
+        <!-- </NavLink> -->
+      </li>
+      <ul class="dropdown">
+        <button
+          class="navbar-button"
+          [class.active]="isDDVisible"
+          (click)="onShowDD()"
+        >
+          Raid Builder <fa-icon [icon]="faCaretDown"></fa-icon>
+      </button>
+        <li *ngIf="isDDVisible" class="dropdownItem">
+          <a routerLink="/raidBuilder"><div class="navbar-button">New Raid</div></a>
+        </li>
+
+        <li *ngIf="isDDVisible" class="dropdownItem">
+          <a routerLink="/raidBuilder"><div class="navbar-button">Open Raid</div></a>
+        </li>
+      </ul>
+      <div *ngIf="isDDVisible && isMobileMenuVisible"></div>
+      <div *ngIf="isDDVisible && isMobileMenuVisible"></div>
+      <div
+        (click)="onShowDD()"
+        id="dropdowOverlayBackground"
+        *ngIf="isDDVisible"
+      ></div>
+      <li>
+        <!-- <NavLink to="/Crafting"> -->
+
+        <a routerLinkActive="active"routerLink="/crafting"><div class="navbar-button">Crafting-WIP</div></a>
+        <!-- </NavLink> -->
+      </li>
+      <li>
+        <!-- <NavLink to="/GuildRoster"> -->
+        <a routerLinkActive="active" routerLink="/guildRoster"><div class="navbar-button">Guild Roster-WIP</div></a>
+        <!-- </NavLink> -->
+      </li>
+      <li>
+        <!-- <NavLink to="/ContactInfo"> -->
+        <a routerLinkActive="active" routerLink="/contact"><div class="navbar-button">Contact</div></a>
+        <!-- </NavLink> -->
+      </li>
+    </ul>
+    <div class="hamburger">
+      <button class="navbar-button" (click)="onShowMobileMenu()">
+        <fa-icon [icon]="faBars"></fa-icon>
+      </button>
+    </div>
+    <div
+      (click)="onShowMobileMenu()"
+      id="mobileOverlayBackground"
+      *ngIf="isMobileMenuVisible"
+    ></div>
+  </nav>
+</header>
