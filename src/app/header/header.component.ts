@@ -1,4 +1,4 @@
-import { Component, OnInit, } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { faHome, faCaretDown, faBars } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -6,13 +6,14 @@ import { faHome, faCaretDown, faBars } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-
 export class HeaderComponent implements OnInit {
   faHome = faHome;
   faCaretDown = faCaretDown;
+  faBars = faBars;
+
   isDDVisible = false;
   isMobileMenuVisible = false;
-  faBars = faBars;
+  isOpenRaidFormVisible = false;
 
   constructor() {}
 
@@ -21,8 +22,12 @@ export class HeaderComponent implements OnInit {
   onShowDD() {
     this.isDDVisible = !this.isDDVisible;
   }
-  onShowMobileMenu(){
-    this.isMobileMenuVisible=!this.isMobileMenuVisible
+  onShowMobileMenu() {
+    this.isMobileMenuVisible = !this.isMobileMenuVisible;
   }
-
+  onShowOpenRaidForm() {
+    this.isOpenRaidFormVisible = true;
+  }
+  onHideOpenRaidForm(){
+    this.isOpenRaidFormVisible = false;}
 }

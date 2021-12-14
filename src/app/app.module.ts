@@ -13,6 +13,13 @@ import { CraftingComponent } from './crafting/crafting/crafting.component';
 import { GuildRosterComponent } from './guildRoster/guild-roster/guild-roster.component';
 import { ContactComponent } from './contact/contact/contact.component';
 
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { OpenRaidComponent } from './forms/open-raid/open-raid.component';
+import { FormsModule } from '@angular/forms';
+import { FormContainerComponent } from './forms/form-container/form-container.component';
+import { StdButtonComponent } from './UI/std-button/std-button.component';
+
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'raidBuilder', component: RaidBuilderComponent },
@@ -20,6 +27,10 @@ const appRoutes: Routes = [
   { path: 'guildRoster', component: GuildRosterComponent },
   { path: 'contact', component: ContactComponent },
 ];
+const config = {
+  //firebase config here
+};
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,12 +41,18 @@ const appRoutes: Routes = [
     CraftingComponent,
     GuildRosterComponent,
     ContactComponent,
+    OpenRaidComponent,
+    FormContainerComponent,
+    StdButtonComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
     RouterModule.forRoot(appRoutes),
+    AngularFireModule.initializeApp(config),
+    AngularFirestoreModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

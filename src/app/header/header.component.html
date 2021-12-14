@@ -2,14 +2,16 @@
   <nav>
     <ul [ngClass]="{ navbar: true, mobileNavView: isMobileMenuVisible }">
       <li>
-        <!-- <NavLink to="/Home" activeClassName={styles.active}> -->
-        <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" routerLink="/">
+        <a
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLink="/"
+        >
           <h1>
             Guild Manager
             <fa-icon [icon]="faHome"></fa-icon>
           </h1>
         </a>
-        <!-- </NavLink> -->
       </li>
       <ul class="dropdown">
         <button
@@ -18,13 +20,17 @@
           (click)="onShowDD()"
         >
           Raid Builder <fa-icon [icon]="faCaretDown"></fa-icon>
-      </button>
+        </button>
         <li *ngIf="isDDVisible" class="dropdownItem">
-          <a routerLink="/raidBuilder"><div class="navbar-button">New Raid</div></a>
+          <a routerLink="/raidBuilder"
+            ><div class="navbar-button">New Raid</div></a
+          >
         </li>
 
         <li *ngIf="isDDVisible" class="dropdownItem">
-          <a routerLink="/raidBuilder"><div class="navbar-button">Open Raid</div></a>
+          <button class="navbar-button" (click)="onShowOpenRaidForm()">
+            <div class="navbar-button">Open Raid</div>
+          </button>
         </li>
       </ul>
       <div *ngIf="isDDVisible && isMobileMenuVisible"></div>
@@ -35,20 +41,19 @@
         *ngIf="isDDVisible"
       ></div>
       <li>
-        <!-- <NavLink to="/Crafting"> -->
-
-        <a routerLinkActive="active"routerLink="/crafting"><div class="navbar-button">Crafting-WIP</div></a>
-        <!-- </NavLink> -->
+        <a routerLinkActive="active" routerLink="/crafting"
+          ><div class="navbar-button">Crafting-WIP</div></a
+        >
       </li>
       <li>
-        <!-- <NavLink to="/GuildRoster"> -->
-        <a routerLinkActive="active" routerLink="/guildRoster"><div class="navbar-button">Guild Roster-WIP</div></a>
-        <!-- </NavLink> -->
+        <a routerLinkActive="active" routerLink="/guildRoster"
+          ><div class="navbar-button">Guild Roster-WIP</div></a
+        >
       </li>
       <li>
-        <!-- <NavLink to="/ContactInfo"> -->
-        <a routerLinkActive="active" routerLink="/contact"><div class="navbar-button">Contact</div></a>
-        <!-- </NavLink> -->
+        <a routerLinkActive="active" routerLink="/contact"
+          ><div class="navbar-button">Contact</div></a
+        >
       </li>
     </ul>
     <div class="hamburger">
@@ -63,3 +68,9 @@
     ></div>
   </nav>
 </header>
+<app-form-container [title]="'Open an existing Raid'" *ngIf="isOpenRaidFormVisible" (closeForm)="onHideOpenRaidForm()">
+  <ng-container><app-open-raid></app-open-raid></ng-container>
+</app-form-container>
+
+
+

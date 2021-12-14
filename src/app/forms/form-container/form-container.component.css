@@ -1,0 +1,95 @@
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 2999;
+    background-color: #000000cc;
+  }
+  .modal {
+    position: fixed;
+    top: 20vh;
+    left: 5%;
+    width: 90%;
+    background-color: #3f3f3fcc;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 3000;
+    animation: slide-down 300ms ease-out forwards;
+  }
+  .title {
+    display: inline-block;
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 3rem;
+    border-bottom: 1px solid #ffffff;
+  }
+  .title h3 {
+    margin: 0.5rem auto;
+  }
+  .xButton {
+    cursor: pointer;
+    position: absolute;
+    top: 0.3rem;
+    right: 0.3rem;
+    font-size: 2rem;
+    background-color: #00000000;
+    color: #FFFFFF;
+    border: 0;
+    border-radius: 5px;
+  }
+  .formBody {
+    padding:  0.5rem;
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+  form {
+    border: 2px solid #ffffff;
+    border-radius: 12px;
+    color: #ffffff;
+  }
+  .formFooter {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    height: 3rem;
+    border-top: 1px solid #ffffff;
+  }
+  
+  .Formbutton {
+    display: inline-block;
+    width: 5rem;
+    height: 2rem;
+    margin: 5px;
+  }
+  
+  .buttonsWrapper {
+    margin-right: 0.5rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+  
+  @media (min-width: 768px) {
+    .modal {
+      width: 40rem;
+      left: calc(50% - 20rem);
+    }
+  }
+  
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-3rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  

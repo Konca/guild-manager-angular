@@ -1,0 +1,72 @@
+.tableContainer {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    background-color: #e7e7e799;
+    border-radius: 0.5rem;
+    height: 30vh;
+    width: 93%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .linkWrapper {
+    display: flex;
+    position: relative;
+    width: 100%;
+    padding: 0.5rem;
+  }
+  .linkForRaid{
+    height: 2rem;
+    width: 70%;
+  }
+  .buttonWrapper {
+    position: absolute;
+    right: 10%;
+    width: 5rem;
+    height: 2rem;
+  }
+  .table{
+    width: 100%;
+    border-collapse: collapse;
+    color: black;
+
+}
+.table thead{
+    font-weight: bold;
+    border-style: solid;
+    border-color:  black;
+    border-width: 0 0 2px 0;
+    
+}
+ tbody td{
+    text-align: center;
+    height: 3rem;
+    border-style: solid;
+    border-color:  white;
+    border-width: 0 0 1px 0;
+}
+
+
+.checkInput:after {
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: #9f9f9f;
+  content: "";
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
+}
+
+.checkInput:checked:after {
+  background-color: #3f3f3f;
+}
+
+.radioLabel {
+  font-weight: bold;
+}
+.tableRow > td:first-child {
+  text-align: left;
+}

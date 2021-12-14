@@ -1,0 +1,31 @@
+<div class="backdrop" (click)="onCloseForm()"></div>
+
+<div class="modal">
+  <form (ngSubmit)="onSubmit(thisform)" #thisform="ngForm">
+    <div class="title">
+      <h3>{{ title }}</h3>
+      <button class="xButton" (click)="onCloseForm()">
+        <fa-icon [icon]="faWindowClose"></fa-icon>
+      </button>
+    </div>
+    <div class="formBody">
+      <ng-content></ng-content>
+    </div>
+    <div class="formFooter">
+      <div class="buttonsWrapper">
+        <div class="Formbutton">
+          <app-std-button
+          (click)="onCloseForm()"
+            [buttonInfo]="{ text: 'Close', style: 'close', type: 'close'}"
+          ></app-std-button>
+        </div>
+        <div class="Formbutton">
+          <app-std-button
+            [buttonInfo]="{ text: 'Submit', style: 'submit', type: 'submit' }"
+            [disabled]="formValid"
+          ></app-std-button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
