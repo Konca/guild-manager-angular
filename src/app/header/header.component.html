@@ -68,8 +68,7 @@
     ></div>
   </nav>
 </header>
-<app-form-container [title]="'Open an existing Raid'" *ngIf="isOpenRaidFormVisible" (closeForm)="onHideOpenRaidForm()">
-  <ng-container><app-open-raid></app-open-raid></ng-container>
+<app-form-container [title]="'Open an existing Raid'" type="OpenRaid"*ngIf="isOpenRaidFormVisible" (closeForm)="onHideOpenRaidForm()">
 </app-form-container>
 
 

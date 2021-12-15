@@ -1,28 +1,34 @@
-<div class="backdrop" (click)="onCloseForm()"></div>
+<div class="backdrop" (click)="closeFormHandler()"></div>
 
 <div class="modal">
-  <form (ngSubmit)="onSubmit(thisform)" #thisform="ngForm">
+  <form (ngSubmit)="onSubmit()" #thisform="ngForm">
     <div class="title">
       <h3>{{ title }}</h3>
-      <button class="xButton" (click)="onCloseForm()">
+      <button class="xButton" (click)="closeFormHandler()">
         <fa-icon [icon]="faWindowClose"></fa-icon>
       </button>
     </div>
     <div class="formBody">
-      <ng-content></ng-content>
+      <app-open-raid
+        *ngIf="type == 'OpenRaid'"
+        [isFormValid]="thisform.valid"
+        [raidObj]="thisform.value.selectedRaid"
+        #childForm
+      ></app-open-raid>
+      
     </div>
     <div class="formFooter">
       <div class="buttonsWrapper">
         <div class="Formbutton">
           <app-std-button
-          (click)="onCloseForm()"
-            [buttonInfo]="{ text: 'Close', style: 'close', type: 'close'}"
+            (click)="closeFormHandler()"
+            [buttonInfo]="{ text: 'Close', style: 'close', type: 'close' }"
           ></app-std-button>
         </div>
         <div class="Formbutton">
           <app-std-button
             [buttonInfo]="{ text: 'Submit', style: 'submit', type: 'submit' }"
-            [disabled]="formValid"
+            [disabled]="!thisform.valid"
           ></app-std-button>
         </div>
       </div>

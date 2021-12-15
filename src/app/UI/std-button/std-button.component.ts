@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-std-button',
   templateUrl: './std-button.component.html',
   styleUrls: ['./std-button.component.css'],
 })
-export class StdButtonComponent implements OnInit {
+export class StdButtonComponent implements OnInit, OnChanges {
   buttonStyle: string;
   buttonText: string;  
   buttonType:string
@@ -18,9 +18,13 @@ export class StdButtonComponent implements OnInit {
   ngOnInit(): void {
     this.buttonStyle = this.buttonInfo.style;
     this.buttonText = this.buttonInfo.text;
-    this.disabledClass = this.disabled ? 'disabled' : '';
+    this.buttonType = this.buttonInfo.type;
+    
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.disabledClass = this.disabled ? 'disabled' : '';
+  }
   onClickHandler() {
     this.click.emit();
   }

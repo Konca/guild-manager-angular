@@ -1,4 +1,4 @@
-<label>Select a raid from the list:</label>
+<fieldset ngModelGroup="selectedRaid"><label>Select a raid from the list:</label>
 <div class="tableContainer">
   <table class="table">
     <thead>
@@ -14,10 +14,12 @@
         <td>
           <input
             type="radio"
-            name="radioButton"
+            [name]="'selectedRaid'"
             id="{{ raid.Id }}"
             class="checkInput"
-            [value]="'das'"
+            [ngModel]
+            [value]="raid"
+            required
           />
           <label htmlFor="{{ raid.Id }}" className="radioLabel">
             {{ raid.Name }}
@@ -31,11 +33,12 @@
   </table>
 </div>
 <div class="linkWrapper">
-  <input type="text" class="linkForRaid" />
+  <input type="text" class="linkForRaid" disabled [value]="link"/>
   <div class="buttonWrapper">
     <app-std-button
       [buttonInfo]="{ text: 'Get Link', style: '' , type: 'button'}"
-      [disabled]="!formValid"
+      [disabled]="!isFormValid" (click)="showLinkHandler()"
     ></app-std-button>
   </div>
 </div>
+</fieldset>
