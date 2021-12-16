@@ -1,0 +1,9 @@
+<li
+  [class]=" [raidMember.Role,raidMember.Class,  raidMember.Spec, raidMember.Status, 'player']"
+  [id]="raidMember.Id"
+>
+  <span ngClass="specIcon"></span>
+  {{ raidMember.Name }}
+  <span class="statusIcon"></span>
+  <span class="rankIcon"></span>
+</li>

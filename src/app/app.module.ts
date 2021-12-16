@@ -21,6 +21,8 @@ import { FormContainerComponent } from './forms/form-container/form-container.co
 import { StdButtonComponent } from './UI/std-button/std-button.component';
 import { RaidDescriptionComponent } from './raidBuilder/raid-description/raid-description.component';
 import { RaidListComponent } from './raidBuilder/raid-list/raid-list.component';
+import { PlayerListItemComponent } from './raidBuilder/player-list-item/player-list-item.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -30,7 +32,7 @@ const appRoutes: Routes = [
   { path: 'contact', component: ContactComponent },
 ];
 const config = {
- //firebase info here
+  //firebase info here
 };
 
 @NgModule({
@@ -48,8 +50,10 @@ const config = {
     StdButtonComponent,
     RaidDescriptionComponent,
     RaidListComponent,
+    PlayerListItemComponent,
   ],
   imports: [
+    DragDropModule,
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,

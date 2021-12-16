@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class RaidDescriptionComponent implements OnInit {
 @Input() raidFoundStatus:number
-@Input() raidInfo:{Name:string, Description:string, DateTime:Date}
+@Input() raidDetails:{Name:string, Description:string, DateTime:Date}
   constructor() { }
 
   ngOnInit(): void {
