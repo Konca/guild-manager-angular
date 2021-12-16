@@ -26,8 +26,11 @@ export class HeaderComponent implements OnInit {
     this.isMobileMenuVisible = !this.isMobileMenuVisible;
   }
   onShowOpenRaidForm() {
+    this.isMobileMenuVisible = false;
+    this.isDDVisible = false;
     this.isOpenRaidFormVisible = true;
   }
-  onHideOpenRaidForm(){
-    this.isOpenRaidFormVisible = false;}
+  onHideOpenRaidForm() {
+    this.isOpenRaidFormVisible = false;
+  }
 }

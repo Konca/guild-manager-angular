@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
-import { OpenRaidComponent } from '../open-raid/open-raid.component';
 
 @Component({
   selector: 'app-form-container',

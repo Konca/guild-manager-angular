@@ -42,13 +42,13 @@ export class OpenRaidComponent implements OnInit {
     });
   }
   onSubmitFormHandler() {
-    this.router.navigate(["/raidBuilder/"+this.guildId]);
+    this.router.navigate(["/raidBuilder/"+this.guildId+"/"+this.raidObj.selectedRaid.Id]);
   }
   showLinkHandler() {
     this.link = window.location.origin + "/raidBuilder/" +this.guildId + '/' + this.raidObj.selectedRaid.Id;
   }
   async getRaidData(guildId) {
-    const raidz = await this.crudService.readRaidData(guildId).then((data) => {
+    const raidz = await this.crudService.readRaidsListData(guildId).then((data) => {
       const raids = [];
       data.docs.forEach((doc) => {
         raids.push(doc.data());

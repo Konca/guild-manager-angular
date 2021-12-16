@@ -19,25 +19,18 @@ import { OpenRaidComponent } from './forms/open-raid/open-raid.component';
 import { FormsModule } from '@angular/forms';
 import { FormContainerComponent } from './forms/form-container/form-container.component';
 import { StdButtonComponent } from './UI/std-button/std-button.component';
+import { RaidDescriptionComponent } from './raidBuilder/raid-description/raid-description.component';
+import { RaidListComponent } from './raidBuilder/raid-list/raid-list.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'raidBuilder/:id', component: RaidBuilderComponent },
+  { path: 'raidBuilder/:guildId/:raidId', component: RaidBuilderComponent },
   { path: 'crafting', component: CraftingComponent },
   { path: 'guildRoster', component: GuildRosterComponent },
   { path: 'contact', component: ContactComponent },
 ];
 const config = {
-  projectId: 'guild-manager-720d2',
-  appId: '1:676165518731:web:e0572e55377206060e9b8e',
-  databaseURL:
-    'https://guild-manager-720d2-default-rtdb.europe-west1.firebasedatabase.app',
-  storageBucket: 'guild-manager-720d2.appspot.com',
-  locationId: 'europe-west',
-  apiKey: 'AIzaSyA5fYCtuR81JZjJLla_7AnrNbylXaRsMOQ',
-  authDomain: 'guild-manager-720d2.firebaseapp.com',
-  messagingSenderId: '676165518731',
-  measurementId: 'G-4EWE6HH739',
+ //firebase info here
 };
 
 @NgModule({
@@ -53,6 +46,8 @@ const config = {
     OpenRaidComponent,
     FormContainerComponent,
     StdButtonComponent,
+    RaidDescriptionComponent,
+    RaidListComponent,
   ],
   imports: [
     BrowserModule,

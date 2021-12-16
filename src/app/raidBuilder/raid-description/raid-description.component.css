@@ -1,0 +1,15 @@
+.raidInfo {
+    background-color: #3f3f3f;
+    border-radius: 12px;
+    margin: 0 auto;
+    padding: 1rem;
+    width: 80vw;
+    color: white;
+  }
+  
+  .raidDescription h3 {
+    font-size: calc(1.25rem + 2.1vw);
+    font-weight: normal;
+    margin: 0;
+  }
+  

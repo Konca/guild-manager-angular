@@ -1,0 +1,8 @@
+
+  .title {
+    font-size: calc(1.625rem + 2.5vw);
+    font-weight: 300;
+    color: #ffffff;
+    text-align: center;
+    margin: 0 0 1.5rem 0;
+  }

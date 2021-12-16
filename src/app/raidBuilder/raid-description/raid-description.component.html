@@ -1,0 +1,14 @@
+<div *ngIf="raidFoundStatus === 200" class="raidInfo">
+    <h3>{{raidInfo.Name}}</h3>
+    <p>{{raidInfo.Description}}</p>
+    <p>
+      Starting on: {{raidInfo.DateTime| date: "EEEE dd MMMM yyyy 'at' HH:mm" }} server time.
+    </p>
+  </div>
+  <div *ngIf="raidFoundStatus === 404" class="raidInfo">
+    <h3>Error 404: No raid with this ID found.</h3>
+  </div>
+  <div *ngIf="raidFoundStatus === 0" class="raidInfo">
+    <h3>Loading...</h3>
+  </div>
+  

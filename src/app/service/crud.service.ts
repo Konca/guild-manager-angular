@@ -10,10 +10,13 @@ export class CrudService {
   uploadGuildData(record) {
     return this.firestore.collection('guilds').doc('123').set(record);
   }
-  readGuildData() {
+  readGuildsListData() {
     return lastValueFrom(this.firestore.collection("guilds").get())
   }
-  readRaidData(guildId){
+  readRaidsListData(guildId:string){
     return lastValueFrom(this.firestore.collection("guilds").doc(guildId).collection("raids").get())
+  }
+  readSelectedRaidData(guildId:string,raidId:string){
+    return lastValueFrom(this.firestore.collection("guilds").doc(guildId).collection("raids").doc(raidId).get())
   }
 }

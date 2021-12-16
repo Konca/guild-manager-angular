@@ -19,14 +19,7 @@ export class GuildRosterComponent implements OnInit {
     });
   }
   getGuilds() {
-    this.crudService.readGuildData().then((data) => {
-      data.docs.forEach((doc) => {
-        console.log(doc.data());
-      });
-    });
-  }
-  getRaids(){
-    this.crudService.readRaidData("712626754883158036").then((data) => {
+    this.crudService.readGuildsListData().then((data) => {
       data.docs.forEach((doc) => {
         console.log(doc.data());
       });
