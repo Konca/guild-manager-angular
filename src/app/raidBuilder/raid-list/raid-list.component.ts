@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CrudService } from 'src/app/service/crud.service';
 import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
   CdkDrag,
-  CdkDropList,
 } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -14,7 +14,10 @@ import {
 })
 export class RaidListComponent implements OnInit {
   @Input() sortedRaids;
+  @Input() raidId: string;
+  @Input() guildId: string;
 
+  classInfo: { Name: string; func: any }[];
   raidInfo: string[] = [];
   raidMembers: {
     Class: string;
@@ -28,10 +31,29 @@ export class RaidListComponent implements OnInit {
 
   raidGroups: any[] = [];
   classes: any[] = [];
-  //miscFields: [[], [], [], []] = [[], [], [], []];
-  constructor() {}
+  miscFields: [any[], any[]] = [[], []];
+  constructor(private crudService: CrudService) {}
 
   ngOnInit(): void {
+    this.classInfo = [
+      {
+        Name: 'Tanks',
+        func: this.tankPredicate,
+      },
+      {
+        Name: 'Healers',
+        func: this.healerPredicate,
+      },
+      {
+        Name: 'Ranged-DPS',
+        func: this.rangedPredicate,
+      },
+      {
+        Name: 'Melee-DPS',
+        func: this.meleePredicate,
+      },
+    ];
+
     Object.keys(this.sortedRaids.RaidInfo).forEach((key) =>
       this.raidInfo.push(this.sortedRaids.RaidInfo[key])
     );
@@ -70,7 +92,9 @@ export class RaidListComponent implements OnInit {
             break;
         }
       } else if (readMember.AssignedTo === 'NoShow') {
+        this.miscFields[1].push(readMember);
       } else if (readMember.AssignedTo === 'Absent') {
+        this.miscFields[0].push(readMember);
       } else {
         raidGroups[+readMember.AssignedTo.match(/\d/g).join('') - 1].push(
           readMember
@@ -82,16 +106,18 @@ export class RaidListComponent implements OnInit {
     this.classes.push(ranged);
     this.classes.push(melee);
     this.raidGroups = raidGroups;
-    console.log(this.classes);
   }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+      if (event.previousIndex !== event.currentIndex) {
+        this.saveToRealtime();
+        moveItemInArray(
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex
+        );
+      }
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -99,22 +125,44 @@ export class RaidListComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+
+      event.container.data[event.currentIndex]['AssignedTo'] =
+        event.container.id.includes('Nothing') ? 'Nothing' : event.container.id;
+      this.saveToRealtime();
     }
   }
+  saveToRealtime() {
+    console.log('drop & save');
+  }
+  saveToFirestore() {
+    const saveData = {
+      SortedRaids: {
+        RaidInfo: { ...this.raidInfo },
+        RaidMembers: {
+          ...[
+            ...this.raidGroups.flat(),
+            ...this.classes.flat(),
+            ...this.miscFields.flat(),
+          ],
+        },
+      },
+    };
+    this.crudService.uploadSelectedRaidData(
+      this.guildId,
+      this.raidId,
+      saveData
+    ).then(()=> window.alert("Saved Successfully")).catch(()=>window.alert("Saved Failed"));
+  }
   tankPredicate(item: CdkDrag<string>) {
-   
-    return item.data==="Tank"
+    return item.data === 'Tank';
   }
   healerPredicate(item: CdkDrag<string>) {
-   
-    return item.data==="Healer"
+    return item.data === 'Healer';
   }
   rangedPredicate(item: CdkDrag<string>) {
-   
-    return item.data==="Ranged-DPS"
+    return item.data === 'Ranged-DPS';
   }
   meleePredicate(item: CdkDrag<string>) {
-   
-    return item.data==="Melee-DPS"
+    return item.data === 'Melee-DPS';
   }
 }

@@ -3,12 +3,13 @@
     <div *ngFor="let raid of raidInfo; let i = index" class="listWrapper">
       <div class="listTitle">
         <p>{{ raid }}</p>
-        <span>0</span>
+        <span>{{ raidGroups[i].length }}</span>
       </div>
       <ul
         class="playerList"
         cdkDropList
         #droplist="cdkDropList"
+        [id]="'Raid' + (i + 1)"
         [cdkDropListData]="raidGroups[i]"
         (cdkDropListDropped)="drop($event)"
       >
@@ -25,84 +26,50 @@
   </div>
   <div class="raidCards">
     <div *ngFor="let classList of classes; let i = index" class="listWrapper">
-      <div [ngSwitch]="i">
-        <div class="listTitle">
-          <p *ngSwitchCase="0">Tanks</p>
-          <p *ngSwitchCase="1">Healers</p>
-          <p *ngSwitchCase="2">Ranged DPS</p>
-          <p *ngSwitchCase="3">Melee DPS</p>
-          <span>{{ classList.length }}</span>
-        </div>
-
-        <ul
-          *ngSwitchCase="0"
-          class="playerList"
-          cdkDropList
-          #droplist="cdkDropList"
-          [cdkDropListData]="classList"
-          (cdkDropListDropped)="drop($event)"
-          [cdkDropListEnterPredicate]="tankPredicate"
-        >
-          <li
-            *ngFor="let member of classList"
-            cdkDrag
-            [cdkDragData]="member.Role"
-          >
-            <app-player-list-item [raidMember]="member"></app-player-list-item>
-          </li>
-        </ul>
-        <ul
-          *ngSwitchCase="1"
-          class="playerList"
-          cdkDropList
-          #droplist="cdkDropList"
-          [cdkDropListData]="classList"
-          (cdkDropListDropped)="drop($event)"
-          [cdkDropListEnterPredicate]="healerPredicate"
-        >
-          <li
-            *ngFor="let member of classList"
-            cdkDrag
-            [cdkDragData]="member.Role"
-          >
-            <app-player-list-item [raidMember]="member"></app-player-list-item>
-          </li>
-        </ul>
-        <ul
-          *ngSwitchCase="2"
-          class="playerList"
-          cdkDropList
-          #droplist="cdkDropList"
-          [cdkDropListData]="classList"
-          (cdkDropListDropped)="drop($event)"
-          [cdkDropListEnterPredicate]="rangedPredicate"
-        >
-          <li
-            *ngFor="let member of classList"
-            cdkDrag
-            [cdkDragData]="member.Role"
-          >
-            <app-player-list-item [raidMember]="member"></app-player-list-item>
-          </li>
-        </ul>
-        <ul
-          *ngSwitchCase="3"
-          class="playerList"
-          cdkDropList
-          #droplist="cdkDropList"
-          [cdkDropListData]="classList"
-          (cdkDropListDropped)="drop($event)"
-          [cdkDropListEnterPredicate]="meleePredicate"
-        >
-          <li
-            *ngFor="let member of classList"
-            cdkDrag
-            [cdkDragData]="member.Role"
-          >
-            <app-player-list-item [raidMember]="member"></app-player-list-item>
-          </li>
-        </ul>
+      <div class="listTitle">
+        <p>{{ classInfo[i].Name }}</p>
+        <span>{{ classList.length }}</span>
       </div>
+
+      <ul
+        class="playerList"
+        cdkDropList
+        #droplist="cdkDropList"
+        [id]="'Nothing' + (i + 1)"
+        [cdkDropListData]="classList"
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListEnterPredicate]="classInfo[i].func"
+      >
+        <li
+          *ngFor="let member of classList"
+          cdkDrag
+          [cdkDragData]="member.Role"
+        >
+          <app-player-list-item [raidMember]="member"></app-player-list-item>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="raidCards">
+    <div *ngFor="let field of miscFields; let i = index" class="listWrapper">
+      <div class="listTitle">
+        <p>{{ i == 0 ? "Absent" : "No-Show" }}</p>
+        <span>{{ field.length }}</span>
+      </div>
+
+      <ul
+        class="playerList"
+        cdkDropList
+        #droplist="cdkDropList"
+        [id]="i == 0 ? 'Absent' : 'NoShow'"
+        [cdkDropListData]="field"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <li *ngFor="let member of field" cdkDrag [cdkDragData]="member.Role">
+          <app-player-list-item [raidMember]="member"></app-player-list-item>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

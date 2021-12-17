@@ -33,6 +33,16 @@ const appRoutes: Routes = [
 ];
 const config = {
   //firebase info here
+  projectId: 'guild-manager-720d2',
+  appId: '1:676165518731:web:e0572e55377206060e9b8e',
+  databaseURL:
+    'https://guild-manager-720d2-default-rtdb.europe-west1.firebasedatabase.app',
+  storageBucket: 'guild-manager-720d2.appspot.com',
+  locationId: 'europe-west',
+  apiKey: 'AIzaSyA5fYCtuR81JZjJLla_7AnrNbylXaRsMOQ',
+  authDomain: 'guild-manager-720d2.firebaseapp.com',
+  messagingSenderId: '676165518731',
+  measurementId: 'G-4EWE6HH739',
 };
 
 @NgModule({

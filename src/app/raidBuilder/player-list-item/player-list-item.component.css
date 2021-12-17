@@ -8,6 +8,11 @@
     border-radius: 5px;
     background-image: url("../../../assets/images/bench.png");
   }
+  .Absence .statusIcon {
+    margin-left: 5px;
+    border-radius: 5px;
+    background-image: url("../../../assets/images/absent.png");
+  }
   .Late .statusIcon {
     margin-left: 5px;
     border-radius: 5px;

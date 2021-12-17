@@ -1,8 +1,14 @@
+.title {
+  font-size: calc(1.625rem + 2.5vw);
+  font-weight: 300;
+  color: #ffffff;
+  text-align: center;
+  margin: 0 0 1.5rem 0;
+}
 
-  .title {
-    font-size: calc(1.625rem + 2.5vw);
-    font-weight: 300;
-    color: #ffffff;
-    text-align: center;
-    margin: 0 0 1.5rem 0;
-  }
+.menuButton {
+  display: inline-block;
+  width: 5rem;
+  height: 2rem;
+  margin: 5px;
+}

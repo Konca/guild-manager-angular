@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CrudService } from 'src/app/service/crud.service';
+import { RaidListComponent } from '../raid-list/raid-list.component';
 
 @Component({
   selector: 'app-raid-builder',
@@ -12,6 +13,7 @@ export class RaidBuilderComponent implements OnInit {
     private crudService: CrudService,
     private route: ActivatedRoute
   ) {}
+  @ViewChild (RaidListComponent) raidList: RaidListComponent;
   guildId: string;
   raidId: string;
   sortedRaids: {};
@@ -37,7 +39,9 @@ export class RaidBuilderComponent implements OnInit {
     });
   }
 
-  saveRaidHandler() {}
+  saveRaidHandler(
+  ) {
+    this.raidList.saveToFirestore()}
   editHandler() {}
 
   getRaids(guildId: string, raidId: string) {
