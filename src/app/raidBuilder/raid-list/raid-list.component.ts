@@ -3,6 +3,8 @@ import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
+  CdkDrag,
+  CdkDropList,
 } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -38,7 +40,6 @@ export class RaidListComponent implements OnInit {
       const raid = [];
       raidGroups.push(raid);
     }
-    console.log(raidGroups);
     const tanks = [];
     const healers = [];
     const ranged = [];
@@ -75,13 +76,13 @@ export class RaidListComponent implements OnInit {
           readMember
         );
       }
-      this.classes.push(tanks);
-      this.classes.push(healers);
-      this.classes.push(ranged);
-      this.classes.push(melee);
-      this.raidGroups = raidGroups;
-      console.log(this.raidGroups);
     });
+    this.classes.push(tanks);
+    this.classes.push(healers);
+    this.classes.push(ranged);
+    this.classes.push(melee);
+    this.raidGroups = raidGroups;
+    console.log(this.classes);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -99,5 +100,21 @@ export class RaidListComponent implements OnInit {
         event.currentIndex
       );
     }
+  }
+  tankPredicate(item: CdkDrag<string>) {
+   
+    return item.data==="Tank"
+  }
+  healerPredicate(item: CdkDrag<string>) {
+   
+    return item.data==="Healer"
+  }
+  rangedPredicate(item: CdkDrag<string>) {
+   
+    return item.data==="Ranged-DPS"
+  }
+  meleePredicate(item: CdkDrag<string>) {
+   
+    return item.data==="Melee-DPS"
   }
 }
