@@ -16,8 +16,8 @@
   margin: 0 auto;
   font-weight: bold;
   max-width: 20rem;
-  min-width: 15rem;
-  padding: 0.33rem;
+  min-width: 10rem;
+  padding: 0.33rem 0.33rem 2rem 0.33rem ;
   min-height: 5rem;
   list-style-type: none;
 }

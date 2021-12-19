@@ -44,13 +44,14 @@ export class RaidListComponent implements OnInit {
         Name: 'Healers',
         func: this.healerPredicate,
       },
-      {
-        Name: 'Ranged-DPS',
-        func: this.rangedPredicate,
-      },
+
       {
         Name: 'Melee-DPS',
         func: this.meleePredicate,
+      },
+      {
+        Name: 'Ranged-DPS',
+        func: this.rangedPredicate,
       },
     ];
 
@@ -85,10 +86,10 @@ export class RaidListComponent implements OnInit {
             healers.push(readMember);
             break;
           case 'Melee-DPS':
-            ranged.push(readMember);
+            melee.push(readMember);
             break;
           case 'Ranged-DPS':
-            melee.push(readMember);
+            ranged.push(readMember);
             break;
         }
       } else if (readMember.AssignedTo === 'NoShow') {
@@ -103,20 +104,21 @@ export class RaidListComponent implements OnInit {
     });
     this.classes.push(tanks);
     this.classes.push(healers);
-    this.classes.push(ranged);
     this.classes.push(melee);
+    this.classes.push(ranged);
     this.raidGroups = raidGroups;
   }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       if (event.previousIndex !== event.currentIndex) {
-        this.saveToRealtime();
         moveItemInArray(
           event.container.data,
           event.previousIndex,
           event.currentIndex
         );
+
+        this.saveToRealtime();
       }
     } else {
       transferArrayItem(
@@ -125,10 +127,20 @@ export class RaidListComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-
-      event.container.data[event.currentIndex]['AssignedTo'] =
-        event.container.id.includes('Nothing') ? 'Nothing' : event.container.id;
-      this.saveToRealtime();
+      setTimeout(() => {
+        event.container.element.nativeElement.children[
+          event.currentIndex
+        ].scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest',
+        });
+        event.container.data[event.currentIndex]['AssignedTo'] =
+          event.container.id.includes('Nothing')
+            ? 'Nothing'
+            : event.container.id;
+        this.saveToRealtime();
+      }, 200);
     }
   }
   saveToRealtime() {
@@ -147,11 +159,10 @@ export class RaidListComponent implements OnInit {
         },
       },
     };
-    this.crudService.uploadSelectedRaidData(
-      this.guildId,
-      this.raidId,
-      saveData
-    ).then(()=> window.alert("Saved Successfully")).catch(()=>window.alert("Saved Failed"));
+    this.crudService
+      .uploadSelectedRaidData(this.guildId, this.raidId, saveData)
+      .then(() => window.alert('Saved Successfully'))
+      .catch(() => window.alert('Saved Failed'));
   }
   tankPredicate(item: CdkDrag<string>) {
     return item.data === 'Tank';

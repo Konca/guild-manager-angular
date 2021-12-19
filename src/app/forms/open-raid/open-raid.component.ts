@@ -31,7 +31,6 @@ export class OpenRaidComponent implements OnInit {
     this.guildId = '712626754883158036';
     this.getRaidData(this.guildId).then((data) => {
       data.forEach((raid) => {
-        console.log(raid);
         this.raidList.push({
           Id: raid.Id,
           Name: raid.Name,
