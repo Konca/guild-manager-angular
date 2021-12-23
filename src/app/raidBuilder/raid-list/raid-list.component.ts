@@ -16,7 +16,8 @@ export class RaidListComponent implements OnInit {
   @Input() sortedRaids;
   @Input() raidId: string;
   @Input() guildId: string;
-
+  @Input() editable: boolean;
+  @Input() scrollable: boolean;
   classInfo: { Name: string; func: any }[];
   raidInfo: string[] = [];
   raidMembers: {
@@ -108,7 +109,9 @@ export class RaidListComponent implements OnInit {
     this.classes.push(ranged);
     this.raidGroups = raidGroups;
   }
-
+  drag(event:CdkDragDrop<string[]>){
+    console.log("sa")
+  }
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       if (event.previousIndex !== event.currentIndex) {
@@ -128,13 +131,14 @@ export class RaidListComponent implements OnInit {
         event.currentIndex
       );
       setTimeout(() => {
+        if (this.scrollable){
         event.container.element.nativeElement.children[
           event.currentIndex
         ].scrollIntoView({
           behavior: 'smooth',
           block: 'start',
           inline: 'nearest',
-        });
+        });}
         event.container.data[event.currentIndex]['AssignedTo'] =
           event.container.id.includes('Nothing')
             ? 'Nothing'

@@ -2,7 +2,7 @@
     <h3>{{raidDetails.Name}}</h3>
     <p>{{raidDetails.Description}}</p>
     <p>
-      Starting on: {{raidDetails.DateTime| date: "EEEE dd MMMM yyyy 'at' HH:mm" }} loacl time.
+      Starting on: {{raidDetails.DateTime| date: "EEEE dd MMMM yyyy 'at' HH:mm" }} local time.
     </p>
   </div>
   <div *ngIf="raidFoundStatus === 404" class="raidInfo">

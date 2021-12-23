@@ -16,6 +16,7 @@
   width: 5rem;
 }
 
+
 .navbar {
   list-style: none;
   display: flex;
@@ -65,7 +66,7 @@ h1:active,
   text-align: center;
   cursor: pointer;
   font: inherit;
-  background-image: radial-gradient(closest-side, #292929eb, #292929);
+  background-color: #292929;
   color: white;
   font-weight: bold;
   border: 0;

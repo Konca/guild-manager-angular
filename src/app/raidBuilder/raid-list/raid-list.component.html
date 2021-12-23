@@ -18,6 +18,7 @@
           cdkDrag
           cdkDragBoundary=".boundary"
           [cdkDragData]="member.Role"
+          [cdkDragDisabled]="!editable"
         >
           <app-player-list-item [raidMember]="member"></app-player-list-item>
         </li>
@@ -44,6 +45,7 @@
           *ngFor="let member of classList"
           cdkDrag
           [cdkDragData]="member.Role"
+          [cdkDragDisabled]="!editable"
         >
           <app-player-list-item [raidMember]="member"></app-player-list-item>
         </li>
@@ -66,7 +68,12 @@
         [cdkDropListData]="field"
         (cdkDropListDropped)="drop($event)"
       >
-        <li *ngFor="let member of field" cdkDrag [cdkDragData]="member.Role">
+        <li
+          *ngFor="let member of field"
+          cdkDrag
+          [cdkDragData]="member.Role"
+          [cdkDragDisabled]="!editable"
+        >
           <app-player-list-item [raidMember]="member"></app-player-list-item>
         </li>
       </ul>

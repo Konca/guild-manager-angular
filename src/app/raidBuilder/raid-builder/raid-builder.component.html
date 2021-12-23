@@ -1,13 +1,23 @@
-<div class="menuButton">
+<div *ngIf="isLoggedIn" class="menuButton">
   <app-std-button
     (click)="saveRaidHandler()"
     [buttonInfo]="{ text: 'Save', style: 'submit', type: 'button' }"
   ></app-std-button>
 </div>
-<div class="menuButton">
+<div *ngIf="isLoggedIn && !editable" class="menuButton">
   <app-std-button
     (click)="editHandler()"
     [buttonInfo]="{ text: 'Edit', style: 'button', type: 'button' }"
+  ></app-std-button>
+</div>
+<div *ngIf="editable" class="menuButton">
+  <app-std-button *ngIf="scrollable"
+    (click)="toggleAutoScrollHandler()"
+    [buttonInfo]="{ text: 'Disable Auto-Scroll', style: 'close', type: 'button' }"
+  ></app-std-button>
+  <app-std-button *ngIf="!scrollable"
+    (click)="toggleAutoScrollHandler()"
+    [buttonInfo]="{ text: 'Enable Auto-Scroll', style: 'button', type: 'button' }"
   ></app-std-button>
 </div>
 
@@ -17,6 +27,8 @@
   [raidDetails]="raidDsc"
 ></app-raid-description>
 <app-raid-list
+[editable]="editable"
+[scrollable]="scrollable"
   *ngIf="raidFoundStatus === 200"
   [sortedRaids]="sortedRaids"
   [guildId]="guildId"
