@@ -1,0 +1,35 @@
+<fieldset ngModelGroup="selectedGuild"><label>Select a guild from the list:</label>
+    <div class="tableContainer">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Server</th>
+            <th scope="col">Your Rank</th>
+            <th scope="col">Id</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let guild of usersGuilds" class="tableRow">
+            <td>
+              <input
+                type="radio"
+                [name]="'selectedGuild'"
+                id="{{ guild.Id }}"
+                class="checkInput"
+                [ngModel]
+                [value]="guild"
+                required
+              />
+              <label htmlFor="{{ guild.Id }}" className="radioLabel">
+                {{ guild.Name }}
+              </label>
+            </td>
+            <td>{{ guild.Server }}</td>
+            <td>{{ guild.Rank }}</td>
+            <td>...{{ guild.Id | slice: -6 }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </fieldset>

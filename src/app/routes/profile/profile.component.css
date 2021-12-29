@@ -1,0 +1,20 @@
+.wrapper {
+    background-color: #3f3f3f;
+    border-radius: 12px;
+    margin: 2rem auto;
+    padding: 1rem;
+    width: 90vw;
+    color: white;
+  }
+  h3{
+      
+    text-align: center;
+    font-size: 2rem;
+  }
+  .changeButton{
+    display: inline-block;
+    width: fit-content;
+    min-width: 6rem;
+    height: 2rem;
+    margin: 5px;
+  }

@@ -15,6 +15,12 @@
         [raidObj]="thisform.value.selectedRaid"
         #childForm
       ></app-open-raid>
+      <app-open-guild
+      *ngIf="type == 'OpenGuild'"
+      [isFormValid]="thisform.valid"
+      [guildObj]="thisform.value.selectedGuild"
+      #childForm
+    ></app-open-guild>
       
     </div>
     <div class="formFooter">

@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CrudService, Raid } from 'src/app/service/crud.service';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { CrudService } from 'src/app/service/crud.service';
 import { ControlContainer, NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-
+import { ProfileService } from 'src/app/service/profile.service';
 @Component({
   selector: 'app-open-raid',
   templateUrl: './open-raid.component.html',
@@ -11,12 +11,13 @@ import { Subscription } from 'rxjs';
 
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
-export class OpenRaidComponent implements OnInit {
+export class OpenRaidComponent implements OnInit, OnDestroy {
   guildId: string;
   link: string;
   @Input() isFormValid: boolean;
   @Input() raidObj: { selectedRaid: { Id: string } };
   raidz: Subscription;
+  userSub: Subscription;
 
   raidList: {
     Id: string;
@@ -24,27 +25,23 @@ export class OpenRaidComponent implements OnInit {
     CreatorName: string;
     Date: Date;
   }[] = [];
-  constructor(private crudService: CrudService, private router: Router,private route:ActivatedRoute) {}
+  constructor(
+    private crudService: CrudService,
+    private router: Router,
+    private profileService: ProfileService
+  ) {}
 
   ngOnInit(): void {
-
     this.link =
       "To generate a links, select a raid and click the 'Get Link' button";
     this.isFormValid = false;
-    this.guildId = '712626754883158036';
-    this.crudService.readRaidsListData(this.guildId)
-    // this.getRaidData(this.guildId).then((data) => {
-    //   data.forEach((raid) => {
-    //     this.raidList.push({
-    //       Id: raid.Id,
-    //       Name: raid.Name,
-    //       CreatorName: raid.CreatorName,
-    //       Date: raid.Date.toDate(),
-    //     });
-    //   });
-    // });
+    this.userSub = this.profileService.user$.subscribe((data) => {
+      this.guildId = data.SelectedGuildId;
+    });
+
+    this.crudService.readRaidsListData(this.guildId);
     this.raidz = this.crudService.raids$.subscribe((data) => {
-      this.raidList=[]
+      this.raidList = [];
       data.forEach((raid) => {
         this.raidList.push({
           Id: raid.Id,
@@ -53,23 +50,24 @@ export class OpenRaidComponent implements OnInit {
           Date: raid.Date.toDate(),
         });
       });
-    }
-    );
+    });
+  }
+  ngOnDestroy(): void {
+    this.raidz.unsubscribe();
+    this.userSub.unsubscribe();
   }
   onSubmitFormHandler() {
-    this.router.navigate(["/raidBuilder/"+this.guildId+"/"+this.raidObj.selectedRaid.Id]);
+    this.router.navigate([
+      '/raidBuilder/' + this.guildId + '/' + this.raidObj.selectedRaid.Id,
+    ]);
   }
   showLinkHandler() {
-    this.link = window.location.origin + "/raidBuilder/" +this.guildId + '/' + this.raidObj.selectedRaid.Id;
+    this.link =
+      window.location.origin +
+      '/raidBuilder/' +
+      this.guildId +
+      '/' +
+      this.raidObj.selectedRaid.Id;
   }
-  // async getRaidData(guildId) {
-  //   const raidz = await this.crudService.readRaidsListData(guildId).then((data) => {
-  //     const raids = [];
-  //     data.docs.forEach((doc) => {
-  //       raids.push(doc.data());
-  //     });
-  //     return raids;
-  //   });
-  //   return raidz;
-  // }
+ 
 }

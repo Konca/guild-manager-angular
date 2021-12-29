@@ -32,7 +32,6 @@ export class FormContainerComponent implements OnInit {
     this.closeForm.emit();
   }
   onSubmit() {
-    console.log(this.thisForm.value);
     this.childForm.onSubmitFormHandler();
     this.closeFormHandler();
   }

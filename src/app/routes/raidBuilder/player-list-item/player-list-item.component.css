@@ -1,0 +1,197 @@
+.Tentative .statusIcon {
+    margin-left: 5px;
+    border-radius: 5px;
+    background-image: url("../../../../assets/images/scale.png");
+  }
+  .Bench .statusIcon {
+    margin-left: 5px;
+    border-radius: 5px;
+    background-image: url("../../../../assets/images/bench.png");
+  }
+  .Absence .statusIcon {
+    margin-left: 5px;
+    border-radius: 5px;
+    background-image: url("../../../../assets/images/absent.png");
+  }
+  .Late .statusIcon {
+    margin-left: 5px;
+    border-radius: 5px;
+    background-image: url("../../../../assets/images/late.png");
+  }
+  
+  .Pug .rankIcon {
+    margin-left: 5px;
+    border-radius: 15px;
+    background-image: url("../../../../assets/images/pug.png");
+  }
+  .Riled-Rookie .rankIcon {
+    margin-left: 5px;
+    border-radius: 15px;
+    background-image: url("../../../../assets/images/rookie.png");
+  }
+  .Sulky-Social .rankIcon {
+    margin-left: 5px;
+    border-radius: 15px;
+    background-image: url("../../../../assets/images/social.png");
+  }
+  .Veteran .rankIcon {
+    margin-left: 5px;
+    border-radius: 15px;
+    background-image: url("../../../../assets/images/vet.png");
+  }
+  .Enraged-Officer .rankIcon {
+    margin-left: 5px;
+    border-radius: 15px;
+    background-image: url("../../../../assets/images/offi.png");
+  }
+  
+  /*SPEC ICON PICKER*/
+  
+  .Druid.Balance > .specIcon {
+    background-image: url("../../../../assets/images/spec/druid/balance.png");
+  }
+  .Druid.Feral > .specIcon {
+    background-image: url("../../../../assets/images/spec/druid/feral.png");
+  }
+  .Druid.Guardian > .specIcon {
+    background-image: url("../../../../assets/images/spec/druid/guardian.png");
+  }
+  .Druid.Restoration > .specIcon {
+    background-image: url("../../../../assets/images/spec/druid/restoration.png");
+  }
+  .Hunter.Beastmastery > .specIcon {
+    background-image: url("../../../../assets/images/spec/hunter/beastmastery.png");
+  }
+  .Hunter.Marksman > .specIcon {
+    background-image: url("../../../../assets/images/spec/hunter/marksman.png");
+  }
+  .Hunter.Survival > .specIcon {
+    background-image: url("../../../../assets/images/spec/hunter/survival.png");
+  }
+  .Mage.Arcane > .specIcon {
+    background-image: url("../../../../assets/images/spec/mage/arcane.png");
+  }
+  .Mage.Fire > .specIcon {
+    background-image: url("../../../../assets/images/spec/mage/fire.png");
+  }
+  .Mage.Frost > .specIcon {
+    background-image: url("../../../../assets/images/spec/mage/frost.png");
+  }
+  .Paladin.Holy > .specIcon {
+    background-image: url("../../../../assets/images/spec/paladin/holy.png");
+  }
+  .Paladin.Protection > .specIcon {
+    background-image: url("../../../../assets/images/spec/paladin/protection.png");
+  }
+  .Paladin.Retribution > .specIcon {
+    background-image: url("../../../../assets/images/spec/paladin/retribution.png");
+  }
+  .Priest.Discipline > .specIcon {
+    background-image: url("../../../../assets/images/spec/priest/discipline.png");
+  }
+  .Priest.Holy > .specIcon {
+    background-image: url("../../../../assets/images/spec/priest/holy.png");
+  }
+  .Priest.Shadow > .specIcon {
+    background-image: url("../../../../assets/images/spec/priest/shadow.png");
+  }
+  .Rogue.Assassination > .specIcon {
+    background-image: url("../../../../assets/images/spec/rogue/assassination.png");
+  }
+  .Rogue.Combat > .specIcon {
+    background-image: url("../../../../assets/images/spec/rogue/combat.png");
+  }
+  .Rogue.Subtlety > .specIcon {
+    background-image: url("../../../../assets/images/spec/rogue/subtlety.png");
+  }
+  .Shaman.Elemental > .specIcon {
+    background-image: url("../../../../assets/images/spec/shaman/elemental.png");
+  }
+  .Shaman.Enhancement > .specIcon {
+    background-image: url("../../../../assets/images/spec/shaman/enhancement.png");
+  }
+  .Shaman.Restoration > .specIcon {
+    background-image: url("../../../../assets/images/spec/shaman/restoration.png");
+  }
+  .Warlock.Affliction > .specIcon {
+    background-image: url("../../../../assets/images/spec/warlock/affliction.png");
+  }
+  .Warlock.Demonology > .specIcon {
+    background-image: url("../../../../assets/images/spec/warlock/demonology.png");
+  }
+  .Warlock.Destruction > .specIcon {
+    background-image: url("../../../../assets/images/spec/warlock/destruction.png");
+  }
+  .Warrior.Arms > .specIcon {
+    background-image: url("../../../../assets/images/spec/warrior/arms.png");
+  }
+  .Warrior.Fury > .specIcon {
+    background-image: url("../../../../assets/images/spec/warrior/fury.png");
+  }
+  .Warrior.Protection > .specIcon {
+    background-image: url("../../../../assets/images/spec/warrior/protection.png");
+  }
+  
+  /*CLASS COLOR PICKER*/
+  
+  .Druid {
+    background-color: #ff7c0a;
+  }
+  .Hunter {
+    background-color: #aad372;
+  }
+  .Mage {
+    background-color: #3fc7eb;
+  }
+  .Paladin {
+    background-color: #f48cba;
+  }
+  .Priest {
+    background-color: #ffffff;
+  }
+  .Rogue {
+    background-color: #fff468;
+  }
+  .Shaman {
+    background-color: #0070dd;
+  }
+  .Warlock {
+    background-color: #8788ee;
+  }
+  .Warrior {
+    background-color: #c69b6d;
+  }
+  
+  
+  .statusIcon,
+  .rankIcon {
+    background-size: 25px;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 0;
+    top:7.5px;
+  }
+  .statusIcon {
+    right: 26px;
+  }
+  
+  .specIcon {
+    vertical-align: middle;
+    display: inline-block;
+    background-size: 30px;
+    width: 30px;
+    height: 30px;  
+    border-radius: 3px;
+  }
+  .player {
+    position: relative;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 30px;
+    border: 1px solid #00000020;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  

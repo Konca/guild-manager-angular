@@ -50,16 +50,22 @@
           ><div class="navbar-button">Guild Roster-WIP</div></a
         >
       </li>
+      <li *ngIf="isLoggedIn">
+        <a routerLinkActive="active" routerLink="/profile"
+          ><div class="navbar-button">Profile</div></a
+        >
+      </li>
       <li>
         <a routerLinkActive="active" routerLink="/contact"
           ><div class="navbar-button">Contact</div></a
         >
       </li>
-      <li>
+      <li *ngIf="!isLoggedIn">
         <button class="navbar-button" (click)="loginHandler()">
-          <fa-icon [icon]="faDiscord"></fa-icon> {{!isLoggedIn?"Log In":"Log Out"}}
+          <fa-icon [icon]="faDiscord"></fa-icon> Log In
         </button>
       </li>
+      <!-- <li>{{user}}</li> -->
     </ul>
 
     <div class="hamburger">

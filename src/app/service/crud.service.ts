@@ -1,8 +1,18 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Timestamp } from 'firebase/firestore';
-import { lastValueFrom, Observable, map } from 'rxjs';
+import { lastValueFrom, Observable, map, merge } from 'rxjs';
 
+import { User } from '../shared/user.model';
+export interface Guild {
+  Id: string;
+  Name: string;
+  Rank: string;
+  Server: string;
+}
+export interface Guilds {
+  [id: string]: Guild;
+}
 export interface Raid {
   CreatorId: string;
   CreatorName: string;
@@ -26,11 +36,6 @@ export interface SortedRaids {
     };
   };
 }
-export interface Article {
-  title: string;
-  img: string;
-  description: string;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -38,12 +43,54 @@ export interface Article {
 export class CrudService {
   constructor(private firestore: AngularFirestore) {}
   raids$: Observable<Raid[]>;
+  user$: Observable<User>;
+  usersGuilds$: Observable<Guilds>;
 
   uploadGuildData(record) {
     return this.firestore.collection('guilds').doc('123').set(record);
   }
+  readGuildMembers(guildId) {
+    return lastValueFrom(
+      this.firestore
+        .collection('guilds')
+        .doc(guildId)
+        .collection('members')
+        .doc('AllMembers')
+        .get()
+    );
+  }
+  uploadUserGuildData(data, id) {
+    return this.firestore
+      .collection('users')
+      .doc(id)
+      .collection('guilds')
+      .doc('Guilds')
+      .set(data);
+  }
   readGuildsListData() {
-    return lastValueFrom(this.firestore.collection('guilds').get());
+    return lastValueFrom(
+      this.firestore.collection('guilds').doc('AllGuilds').get()
+    );
+  }
+  uploadUser(userId, data) {
+    return this.firestore
+      .collection('users')
+      .doc(userId)
+      .set(data, { merge: true });
+  }
+  readUser(userId: string) {
+    this.user$ = this.firestore
+      .collection('users')
+      .doc<User>(userId)
+      .valueChanges();
+  }
+  readUserGuilds(userId: string) {
+    this.usersGuilds$ = this.firestore
+      .collection('users')
+      .doc(userId)
+      .collection('guilds')
+      .doc<Guilds>('Guilds')
+      .valueChanges();
   }
   readRaidsListData(guildId: string) {
     this.raids$ = this.firestore
@@ -55,7 +102,7 @@ export class CrudService {
         map((actions) =>
           actions.map((a) => {
             const data = a.payload.doc.data() as Raid;
-            return data ;
+            return data;
           })
         )
       );
