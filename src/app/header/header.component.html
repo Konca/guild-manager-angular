@@ -40,7 +40,7 @@
         id="dropdowOverlayBackground"
         *ngIf="isDDVisible"
       ></div>
-      <li *ngIf="isLoggedIn">
+      <!-- <li *ngIf="isLoggedIn">
         <a routerLinkActive="active" routerLink="/crafting"
           ><div class="navbar-button">Crafting-WIP</div></a
         >
@@ -49,10 +49,10 @@
         <a routerLinkActive="active" routerLink="/guildRoster"
           ><div class="navbar-button">Guild Roster-WIP</div></a
         >
-      </li>
+      </li> -->
       <li *ngIf="isLoggedIn">
-        <a routerLinkActive="active" routerLink="/profile"
-          ><div class="navbar-button">Profile</div></a
+        <a routerLinkActive="active" routerLink="/settings"
+          ><div class="navbar-button">Settings</div></a
         >
       </li>
       <li>
@@ -65,7 +65,6 @@
           <fa-icon [icon]="faDiscord"></fa-icon> Log In
         </button>
       </li>
-      <!-- <li>{{user}}</li> -->
     </ul>
 
     <div class="hamburger">

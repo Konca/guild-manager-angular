@@ -1,44 +1,46 @@
-<fieldset ngModelGroup="selectedRaid"><label>Select a raid from the list:</label>
-<div class="tableContainer">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Date</th>
-        <th scope="col">Created By</th>
-        <th scope="col">Id</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let raid of raidList" class="tableRow">
-        <td>
-          <input
-            type="radio"
-            [name]="'selectedRaid'"
-            id="{{ raid.Id }}"
-            class="checkInput"
-            [ngModel]
-            [value]="raid"
-            required
-          />
-          <label htmlFor="{{ raid.Id }}" className="radioLabel">
-            {{ raid.Name }}
-          </label>
-        </td>
-        <td>{{ raid.Date | date: "EE dd/MM/yy HH:mm" }}</td>
-        <td>{{ raid.CreatorName }}</td>
-        <td>...{{ raid.Id | slice: -6 }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="linkWrapper">
-  <input type="text" class="linkForRaid" disabled [value]="link"/>
-  <div class="buttonWrapper">
-    <app-std-button
-      [buttonInfo]="{ text: 'Get Link', style: '' , type: 'button'}"
-      [disabled]="!isFormValid" (click)="showLinkHandler()"
-    ></app-std-button>
+<fieldset ngModelGroup="selectedRaid">
+  <label>{{ "Select a raid from the list: (" + guildName + ")" }}</label>
+  <div class="tableContainer">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Date</th>
+          <th scope="col">Created By</th>
+          <th scope="col">Id</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let raid of raidList" class="tableRow">
+          <td>
+            <input
+              type="radio"
+              [name]="'selectedRaid'"
+              id="{{ raid.Id }}"
+              class="checkInput"
+              [ngModel]
+              [value]="raid"
+              required
+            />
+            <label htmlFor="{{ raid.Id }}" className="radioLabel">
+              {{ raid.Name }}
+            </label>
+          </td>
+          <td>{{ raid.Date | date: "EE dd/MM/yy HH:mm" }}</td>
+          <td>{{ raid.CreatorName }}</td>
+          <td>...{{ raid.Id | slice: -6 }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-</div>
+  <div class="linkWrapper">
+    <input type="text" class="linkForRaid" disabled [value]="link" />
+    <div class="buttonWrapper">
+      <app-std-button
+        [buttonInfo]="{ text: 'Get Link', style: '', type: 'button' }"
+        [disabled]="!isFormValid"
+        (click)="showLinkHandler()"
+      ></app-std-button>
+    </div>
+  </div>
 </fieldset>

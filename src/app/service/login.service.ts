@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import disc from '../../assets/apiKeys/discordKey.json';
 import { CrudService } from './crud.service';
 import { ProfileService } from './profile.service';
+import { User } from '../shared/user.model';
 
 export interface LoginInfo {
   email: string;
@@ -17,23 +18,27 @@ export interface LoginInfo {
 export interface Guilds {
   [id: string]: { Id: string; Name: string; Server: string };
 }
-export interface User {}
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   public loginStatusChanged = new BehaviorSubject<boolean>(false);
 
-  constructor(private crudService: CrudService, private profileService:ProfileService) {}
+  constructor(
+    private crudService: CrudService,
+    private profileService: ProfileService
+  ) {}
 
   loginUser(id: string) {
     this.loginStatusChanged.next(true);
-    this.profileService.getUserProfile()
+    this.profileService.getUserProfile();
   }
   logOutUser(id: string) {
     this.loginStatusChanged.next(false);
   }
-  authoriseWithDisc(code: string) {
+  authoriseWithDisc(code: string, refresh: boolean = false) {
+    let grant = 'authorization_code';
+    if (refresh) grant = 'refresh_token';
     const options = {
       url: 'https://discord.com/api/oauth2/token',
       method: 'POST',
@@ -43,8 +48,8 @@ export class LoginService {
       body: new URLSearchParams({
         client_id: disc.DISCORD_OAUTH_CLIENT_ID,
         client_secret: disc.DISCORD_OAUTH_SECRET,
-        grant_type: 'authorization_code',
-        code: code,
+        grant_type: grant,
+        [refresh ? 'refresh_token' : 'code']: code,
         redirect_uri: disc.DISCORD_REDIRECT_URL,
       }).toString(),
     };
@@ -56,16 +61,72 @@ export class LoginService {
       }
     );
   }
+  async refreshToken(refreshToken: string) {
+    const response = await this.authoriseWithDisc(refreshToken, true);
+    const tokens: {
+      RefreshToken: string;
+      AccessToken: string;
+      ExpiresIn: string;
+    } = {
+      RefreshToken: response.refresh_token,
+      AccessToken: response.access_token,
+      ExpiresIn: response.expires_in,
+    };
+    return tokens;
+  }
+  async autoLogin() {
+    let anyChanges = false;
+    const userData: User = JSON.parse(localStorage.getItem('userData'));
+    if (!userData) return;
+    userData.ExpiresOn = Timestamp.fromMillis(
+      +userData.ExpiresOn['seconds'] * 1000
+    );
+    if (userData.ExpiresOn < Timestamp.fromMillis(Date.now())) {
+      const newTokens = await this.refreshToken(userData.RefreshToken);
+      userData.RefreshToken = newTokens.RefreshToken;
+      userData.AccessToken = newTokens.AccessToken;
+      userData.ExpiresOn = Timestamp.fromMillis(
+        Date.now() + +newTokens.ExpiresIn * 1000
+      );
+      anyChanges = true;
+    }
+
+    const guildInfo = await this.getAuthUserGuilds(userData.AccessToken);
+    const botGuilds = await this.readBotGuilds();
+    const guildDataForUpload = await this.sortMemberRanks(
+      guildInfo,
+      botGuilds,
+      userData.Id
+    );
+    this.crudService.uploadUserGuildData(guildDataForUpload, userData.Id);
+    if (!guildDataForUpload[userData.SelectedGuildId]) {
+      userData.SelectedGuildId =
+        botGuilds[Object.keys(guildDataForUpload)[0]].Id;
+      userData.SelectedGuildName =
+        botGuilds[Object.keys(guildDataForUpload)[0]].Name;
+      anyChanges = true;
+    }
+    if (anyChanges) {
+      this.crudService.uploadUser(userData.Id, userData);
+      localStorage.setItem('userData', JSON.stringify(userData));
+    }
+
+    await this.crudService.readUser(userData.Id);
+    await this.crudService.readUserGuilds(userData.Id);
+    this.loginUser(userData.Id);
+  }
   async getAuthUserData(loginInfo: LoginInfo) {
     const userInfo = await this.getAuthUserInfo(loginInfo.access_token);
-
     const guildInfo = await this.getAuthUserGuilds(loginInfo.access_token);
+    if (Object.keys(guildInfo).length===0) return 'No Discord Servers found matching this user. \nAuthetification cancelled.';
     const botGuilds = await this.readBotGuilds();
     const guildDataForUpload = await this.sortMemberRanks(
       guildInfo,
       botGuilds,
       userInfo.id
     );
+    if (Object.keys(guildDataForUpload).length===0)
+      return 'No Discord Servers that are using the bot found matching this user. \nAuthetification cancelled.';
     const userdataForUpload = {
       Email: userInfo.email,
       Discriminator: userInfo.discriminator,
@@ -74,16 +135,18 @@ export class LoginService {
       AccessToken: loginInfo.access_token,
       ExpiresOn: Timestamp.fromMillis(
         Date.now() + +loginInfo.expires_in * 1000
-      ),SelectedGuildId:botGuilds[Object.keys(botGuilds)[0]].Id,
-      SelectedGuildName:botGuilds[Object.keys(botGuilds)[0]].Name,
+      ),
+      SelectedGuildId: botGuilds[Object.keys(guildDataForUpload)[0]].Id,
+      SelectedGuildName: botGuilds[Object.keys(guildDataForUpload)[0]].Name,
       RefreshToken: loginInfo.refresh_token,
-
     };
     this.crudService.uploadUser(userInfo.id, userdataForUpload);
     this.crudService.uploadUserGuildData(guildDataForUpload, userInfo.id);
-    await this.crudService.readUser(userInfo.id)
-    await this.crudService.readUserGuilds(userInfo.id)
+    await this.crudService.readUser(userInfo.id);
+    await this.crudService.readUserGuilds(userInfo.id);
+    localStorage.setItem('userData', JSON.stringify(userdataForUpload));
     this.loginUser(userInfo.id);
+    return false;
   }
 
   async sortMemberRanks(guildInfo, botGuilds, id) {

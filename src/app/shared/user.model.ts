@@ -9,8 +9,10 @@ export class User {
     public SelectedGuildId: string,
     public SelectedGuildName: string,
     public AccessToken: string,
-    public ExpiresOn: Timestamp|string,
+    public ExpiresOn:
+      | Timestamp
+      | string
+      | { seconds: number; nanoseconds: number },
     public RefreshToken: string
   ) {}
-
 }

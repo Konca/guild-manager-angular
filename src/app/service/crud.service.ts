@@ -9,6 +9,7 @@ export interface Guild {
   Name: string;
   Rank: string;
   Server: string;
+  RoleHierarchy?: { [job: string]: { [roleid: string]: string } }|string;
 }
 export interface Guilds {
   [id: string]: Guild;
@@ -44,6 +45,7 @@ export class CrudService {
   constructor(private firestore: AngularFirestore) {}
   raids$: Observable<Raid[]>;
   user$: Observable<User>;
+  guild$: Observable<Guild>;
   usersGuilds$: Observable<Guilds>;
 
   uploadGuildData(record) {
@@ -82,6 +84,12 @@ export class CrudService {
     this.user$ = this.firestore
       .collection('users')
       .doc<User>(userId)
+      .valueChanges();
+  }
+  readGuildData(guildId: string) {
+    this.guild$ = this.firestore
+      .collection('guilds')
+      .doc<Guild>(guildId)
       .valueChanges();
   }
   readUserGuilds(userId: string) {

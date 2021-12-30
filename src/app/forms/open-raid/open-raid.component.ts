@@ -13,6 +13,7 @@ import { ProfileService } from 'src/app/service/profile.service';
 })
 export class OpenRaidComponent implements OnInit, OnDestroy {
   guildId: string;
+  guildName: string;
   link: string;
   @Input() isFormValid: boolean;
   @Input() raidObj: { selectedRaid: { Id: string } };
@@ -37,6 +38,7 @@ export class OpenRaidComponent implements OnInit, OnDestroy {
     this.isFormValid = false;
     this.userSub = this.profileService.user$.subscribe((data) => {
       this.guildId = data.SelectedGuildId;
+      this.guildName = data.SelectedGuildName;
     });
 
     this.crudService.readRaidsListData(this.guildId);

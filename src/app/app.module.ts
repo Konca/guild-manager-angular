@@ -26,7 +26,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RedirectComponent } from './discord/redirect/redirect.component';
 
 import config from '../assets/apiKeys/firebaseKey.json';
-import { ProfileComponent } from './routes/profile/profile.component';
+import { SettingsComponent } from './routes/settings/settings.component';
 import { OpenGuildComponent } from './forms/open-guild/open-guild.component';
 
 const appRoutes: Routes = [
@@ -35,7 +35,7 @@ const appRoutes: Routes = [
   { path: 'crafting', component: CraftingComponent },
   { path: 'guildRoster', component: GuildRosterComponent },
   { path: 'contact', component: ContactComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'settings', component: SettingsComponent },
   { path: 'api/auth/discord/redirect', component: RedirectComponent },
 ];
 @NgModule({
@@ -54,7 +54,7 @@ const appRoutes: Routes = [
     RaidDescriptionComponent,
     RaidListComponent,
     PlayerListItemComponent,
-    ProfileComponent,
+    SettingsComponent,
     OpenGuildComponent,
   ],
   imports: [

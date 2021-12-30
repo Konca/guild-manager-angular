@@ -9,7 +9,8 @@ import { LoginService } from 'src/app/service/login.service';
   styleUrls: ['./redirect.component.css'],
 })
 export class RedirectComponent implements OnInit {
-  code: string;
+  private code: string;
+  private autolog: string;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -19,15 +20,21 @@ export class RedirectComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.code = params['code'];
+      this.autolog = params['autolog'];
     });
     if (this.code) {
       this.loginService
         .authoriseWithDisc(this.code.toString())
         .then((loginInfo) => {
-          this.loginService.getAuthUserData(loginInfo).then(() => {            
-            this.router.navigate(['profile']);
+          this.loginService.getAuthUserData(loginInfo).then((response) => {
+            if (response) {
+              window.alert(response);
+              this.router.navigate(['']);
+            } else this.router.navigate(['settings']);
           });
         });
-    }
+    } else if (this.autolog) {
+      this.loginService.autoLogin().then(() => this.router.navigate(['']));
+    } else this.router.navigate(['']);
   }
 }

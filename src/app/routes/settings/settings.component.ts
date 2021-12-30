@@ -5,17 +5,19 @@ import { ProfileService } from 'src/app/service/profile.service';
 import { User } from 'src/app/shared/user.model';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css'],
+  selector: 'app-settings',
+  templateUrl: './settings.component.html',
+  styleUrls: ['./settings.component.css'],
 })
-export class ProfileComponent implements OnInit {
+export class SettingsComponent implements OnInit {
   private logInChangeSub$: Subscription;
   private loggedUser$: Subscription;
+  private selectedGuild$: Subscription;
   isLoggedIn: boolean;
   user: User;
   userName: string;
   selectedGuild: string;
+  selectedGId: string;
   isOpenGuildsormVisible: boolean;
   constructor(
     private loginService: LoginService,
@@ -33,12 +35,15 @@ export class ProfileComponent implements OnInit {
         this.user = user;
         this.userName = user.UserName + '#' + user.Discriminator;
         this.selectedGuild = user.SelectedGuildName;
+        this.selectedGId = user.SelectedGuildId;
       });
+      console.log(this.selectedGId);
     }
   }
   ngOnDestroy(): void {
     this.logInChangeSub$.unsubscribe();
     this.loggedUser$.unsubscribe();
+    this.selectedGuild$.unsubscribe();
   }
   guildSelectorHandler() {
     this.isOpenGuildsormVisible = true;

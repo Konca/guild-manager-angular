@@ -11,13 +11,4 @@ export class GuildRosterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  createGuild() {
-    const guild = { 131313: { Name: 'dicks', Id: '131313' } };
-
-    this.crudService.uploadGuildData(guild).then((res) => {
-      console.log(res);
-    });
-  }
-
-  onGuildListLoad() {}
 }
