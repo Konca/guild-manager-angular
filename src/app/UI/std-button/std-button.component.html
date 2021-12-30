@@ -1,6 +1,9 @@
-<button class="button"
-      [ngClass]="[buttonStyle, disabledClass]"
-      disabled={{disabledClass}}
-      [type]="buttonType"
-    >{{buttonText}}
-    </button>
+<button
+  class="button"
+  [ngClass]="[buttonStyle, disabledClass]"
+  disabled="{{ disabledClass }}"
+  [type]="buttonType"
+>
+  <fa-icon [icon]="faDiscord" *ngIf="specialIcon === 'discord'"></fa-icon
+  >{{ buttonText }}
+</button>

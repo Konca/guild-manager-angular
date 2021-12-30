@@ -130,6 +130,7 @@ export class RaidListComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+      
       setTimeout(() => {
         if (this.scrollable){
         event.container.element.nativeElement.children[

@@ -3,8 +3,21 @@
     <h3>Please Log In to view this page</h3>
   </div>
   <div *ngIf="isLoggedIn">
-    <h3>{{ "Profile: " + userName }}</h3>
-    <div>
+    <div class="titleWrapper">
+      <h3>{{ "Profile: " + userName }}</h3>
+      <div class="logoutButton">
+        <app-std-button
+          (click)="logoutHandler()"
+          [buttonInfo]="{
+            text: 'Log Out',
+            style: 'close',
+            type: 'discord'
+          }"
+        ></app-std-button>
+      </div>
+    </div>
+    <div class="clientSettings">
+      <p>Client Settings:</p>
       {{ "Selected Guild: " + selectedGuild }}
       <div class="changeButton">
         <app-std-button
@@ -15,6 +28,33 @@
             type: 'button'
           }"
         ></app-std-button>
+      </div>
+    </div>
+    <div *ngIf="guildDataRead" cdkDropListGroup class="boundary">
+      <p>Guild Settings:</p> <button (click)="saveToFirestore()">save</button>
+      <div class="ranks">
+        <div *ngFor="let role of roles, let i = index">
+          <div class="listTitle">{{ role.GroupName }}</div>
+          <ul
+            class="rankList"
+            cdkDropList
+            #droplist="cdkDropList"
+            [id]="role.GroupName"
+            [cdkDropListData]="role.Roles"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <li
+              *ngFor="let item of role.Roles"
+              [id]="item.Id"
+              class="roleItem"
+              cdkDrag
+              [cdkDragData]="item.Group"
+              cdkDragBoundary=".boundary"
+            >
+              {{ item.Name }}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

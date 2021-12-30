@@ -24,8 +24,7 @@ export class ProfileService implements OnDestroy {
       Id: '',
       Name: '',
       Rank: '',
-      Server: '',
-      RoleHierarchy:""
+      Server: ''
     },
   });
   private guilds: Subscription;

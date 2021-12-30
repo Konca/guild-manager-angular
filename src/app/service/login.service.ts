@@ -29,12 +29,13 @@ export class LoginService {
     private profileService: ProfileService
   ) {}
 
-  loginUser(id: string) {
+  loginUser() {
     this.loginStatusChanged.next(true);
     this.profileService.getUserProfile();
   }
-  logOutUser(id: string) {
+  logOutUser() {
     this.loginStatusChanged.next(false);
+    this.profileService.ngOnDestroy()
   }
   authoriseWithDisc(code: string, refresh: boolean = false) {
     let grant = 'authorization_code';
@@ -113,7 +114,7 @@ export class LoginService {
 
     await this.crudService.readUser(userData.Id);
     await this.crudService.readUserGuilds(userData.Id);
-    this.loginUser(userData.Id);
+    this.loginUser();
   }
   async getAuthUserData(loginInfo: LoginInfo) {
     const userInfo = await this.getAuthUserInfo(loginInfo.access_token);
@@ -145,7 +146,7 @@ export class LoginService {
     await this.crudService.readUser(userInfo.id);
     await this.crudService.readUserGuilds(userInfo.id);
     localStorage.setItem('userData', JSON.stringify(userdataForUpload));
-    this.loginUser(userInfo.id);
+    this.loginUser();
     return false;
   }
 

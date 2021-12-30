@@ -1,20 +1,71 @@
 .wrapper {
-    background-color: #3f3f3f;
-    border-radius: 12px;
-    margin: 2rem auto;
-    padding: 1rem;
-    width: 90vw;
-    color: white;
-  }
-  h3{
-      
-    text-align: center;
-    font-size: 2rem;
-  }
-  .changeButton{
-    display: inline-block;
-    width: fit-content;
-    min-width: 6rem;
-    height: 2rem;
-    margin: 5px;
-  }
+  background-color: #3f3f3f;
+  border-radius: 12px;
+  margin: 2rem auto;
+  padding: 1rem;
+  width: 90vw;
+  color: white;
+}
+.clientSettings {
+  border: 1px solid white;
+  border-width: 1px 0;
+}
+h3 {
+  text-align: center;
+  font-size: 2rem;
+}
+p {
+  font-size: 1.5rem;
+}
+.changeButton {
+  display: inline-block;
+  width: fit-content;
+  min-width: 6rem;
+  height: 2rem;
+  margin: 5px;
+}
+.titleWrapper {
+  width: 100%;
+  position: relative;
+}
+.logoutButton {
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  width: fit-content;
+  min-width: 6rem;
+  height: 3rem;
+}
+.ranks{
+  display: flex;
+}
+.ranks>div{
+  margin: 0 auto;
+}
+.rankList {
+  background-color: #00000090;
+  margin: 0 auto;
+  font-weight: bold;
+  max-width: 20rem;
+  min-width: 10rem;
+  padding: 0.33rem 0.33rem 2rem 0.33rem ;
+  min-height: 5rem;
+  list-style-type: none;
+}
+.listTitle {
+  position: relative;
+  text-align: center;
+  padding: 0.8rem;
+  background-color: #000000;
+}
+.roleItem {
+  position: relative;
+  color: black;
+  background-color: #dfd9ae;
+  white-space: nowrap;
+  overflow: hidden;
+  height: 20px;
+  border: 1px solid #00000020;
+  padding: 5px;
+  border-radius: 5px;
+}

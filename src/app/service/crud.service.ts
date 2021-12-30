@@ -4,12 +4,17 @@ import { Timestamp } from 'firebase/firestore';
 import { lastValueFrom, Observable, map, merge } from 'rxjs';
 
 import { User } from '../shared/user.model';
+export interface GuildData {
+  Id: string;
+  Name: string;
+  Roles: { Id: string; Name: string }[];
+  Server: string;
+}
 export interface Guild {
   Id: string;
   Name: string;
   Rank: string;
   Server: string;
-  RoleHierarchy?: { [job: string]: { [roleid: string]: string } }|string;
 }
 export interface Guilds {
   [id: string]: Guild;
@@ -45,7 +50,7 @@ export class CrudService {
   constructor(private firestore: AngularFirestore) {}
   raids$: Observable<Raid[]>;
   user$: Observable<User>;
-  guild$: Observable<Guild>;
+  guildData$: Observable<GuildData>;
   usersGuilds$: Observable<Guilds>;
 
   uploadGuildData(record) {
@@ -87,9 +92,9 @@ export class CrudService {
       .valueChanges();
   }
   readGuildData(guildId: string) {
-    this.guild$ = this.firestore
+    this.guildData$ = this.firestore
       .collection('guilds')
-      .doc<Guild>(guildId)
+      .doc<GuildData>(guildId)
       .valueChanges();
   }
   readUserGuilds(userId: string) {
@@ -121,6 +126,12 @@ export class CrudService {
       .doc(guildId)
       .collection('raids')
       .doc(raidId)
+      .set(data, { merge: true });
+  }
+  uploadGuildRoles(guildId, data) {
+    return this.firestore
+      .collection('guilds')
+      .doc(guildId)
       .set(data, { merge: true });
   }
   readSelectedRaidData(guildId: string, raidId: string) {
