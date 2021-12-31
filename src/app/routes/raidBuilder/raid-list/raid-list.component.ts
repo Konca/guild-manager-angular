@@ -109,9 +109,6 @@ export class RaidListComponent implements OnInit {
     this.classes.push(ranged);
     this.raidGroups = raidGroups;
   }
-  drag(event:CdkDragDrop<string[]>){
-    console.log("sa")
-  }
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       if (event.previousIndex !== event.currentIndex) {

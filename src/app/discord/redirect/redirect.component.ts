@@ -29,7 +29,7 @@ export class RedirectComponent implements OnInit {
           this.loginService.getAuthUserData(loginInfo).then((response) => {
             if (response) {
               window.alert(response);
-              this.router.navigate(['']);
+              this.router.navigate([''],);
             } else this.router.navigate(['settings']);
           });
         });

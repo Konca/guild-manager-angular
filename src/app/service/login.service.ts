@@ -35,8 +35,9 @@ export class LoginService {
   }
   logOutUser() {
     this.loginStatusChanged.next(false);
-    this.profileService.ngOnDestroy()
+    this.profileService.ngOnDestroy();
   }
+  getUserGuildRoleGroups() {}
   authoriseWithDisc(code: string, refresh: boolean = false) {
     let grant = 'authorization_code';
     if (refresh) grant = 'refresh_token';
@@ -78,7 +79,7 @@ export class LoginService {
   async autoLogin() {
     let anyChanges = false;
     const userData: User = JSON.parse(localStorage.getItem('userData'));
-    if (!userData) return;
+    if (!userData) return false;
     userData.ExpiresOn = Timestamp.fromMillis(
       +userData.ExpiresOn['seconds'] * 1000
     );
@@ -93,6 +94,7 @@ export class LoginService {
     }
 
     const guildInfo = await this.getAuthUserGuilds(userData.AccessToken);
+    const readFSUserData = await this.crudService.readUserOnce(userData.Id);
     const botGuilds = await this.readBotGuilds();
     const guildDataForUpload = await this.sortMemberRanks(
       guildInfo,
@@ -100,6 +102,11 @@ export class LoginService {
       userData.Id
     );
     this.crudService.uploadUserGuildData(guildDataForUpload, userData.Id);
+    if (userData.SelectedGuildId !== readFSUserData.data()['SelectedGuildId']) {
+      userData.SelectedGuildId = readFSUserData.data()['SelectedGuildId'];
+      userData.SelectedGuildName = readFSUserData.data()['SelectedGuildName'];
+      anyChanges = true;
+    }
     if (!guildDataForUpload[userData.SelectedGuildId]) {
       userData.SelectedGuildId =
         botGuilds[Object.keys(guildDataForUpload)[0]].Id;
@@ -114,19 +121,22 @@ export class LoginService {
 
     await this.crudService.readUser(userData.Id);
     await this.crudService.readUserGuilds(userData.Id);
+    await this.crudService.readGuildData(userData.SelectedGuildId);
     this.loginUser();
+    return true;
   }
   async getAuthUserData(loginInfo: LoginInfo) {
     const userInfo = await this.getAuthUserInfo(loginInfo.access_token);
     const guildInfo = await this.getAuthUserGuilds(loginInfo.access_token);
-    if (Object.keys(guildInfo).length===0) return 'No Discord Servers found matching this user. \nAuthetification cancelled.';
+    if (Object.keys(guildInfo).length === 0)
+      return 'No Discord Servers found matching this user. \nAuthetification cancelled.';
     const botGuilds = await this.readBotGuilds();
     const guildDataForUpload = await this.sortMemberRanks(
       guildInfo,
       botGuilds,
       userInfo.id
     );
-    if (Object.keys(guildDataForUpload).length===0)
+    if (Object.keys(guildDataForUpload).length === 0)
       return 'No Discord Servers that are using the bot found matching this user. \nAuthetification cancelled.';
     const userdataForUpload = {
       Email: userInfo.email,
@@ -145,6 +155,7 @@ export class LoginService {
     this.crudService.uploadUserGuildData(guildDataForUpload, userInfo.id);
     await this.crudService.readUser(userInfo.id);
     await this.crudService.readUserGuilds(userInfo.id);
+    await this.crudService.readGuildData(userInfo.SelectedGuildId);
     localStorage.setItem('userData', JSON.stringify(userdataForUpload));
     this.loginUser();
     return false;

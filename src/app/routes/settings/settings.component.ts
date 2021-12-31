@@ -23,7 +23,8 @@ export class SettingsComponent implements OnInit {
   private logInChangeSub$: Subscription;
   private loggedUser$: Subscription;
   private selectedGuild$: Subscription;
-
+  private currRole$: Subscription;
+  roleInCurrGuild: string;
   isLoggedIn: boolean;
   user: User;
   userName: string;
@@ -52,13 +53,16 @@ export class SettingsComponent implements OnInit {
         this.selectedGuild = user.SelectedGuildName;
         this.selectedGId = user.SelectedGuildId;
         this.crudService.readGuildData(user.SelectedGuildId);
-      });
+     
+      this.currRole$ = this.profileService.selectedGuildRankGroup$.subscribe(
+        (rank) => (this.roleInCurrGuild = rank)
+      );
       if (this.selectedGId) {
         this.selectedGuild$ = this.crudService.guildData$.subscribe((guild) => {
           this.roles = this.sortHierarchy(guild.Roles);
           this.guildDataRead = true;
         });
-      }
+      } });
     }
   }
 
@@ -78,7 +82,7 @@ export class SettingsComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      event.container.data[event.currentIndex]['Group'] =event.container.id
+      event.container.data[event.currentIndex]['Group'] = event.container.id;
     }
   }
 
@@ -91,7 +95,6 @@ export class SettingsComponent implements OnInit {
         saveData.Roles[element.Id] = element;
       });
     });
-    console.log(saveData)
     this.crudService
       .uploadGuildRoles(this.selectedGId, saveData)
       .then(() => window.alert('Saved Successfully'))
@@ -131,6 +134,7 @@ export class SettingsComponent implements OnInit {
     this.logInChangeSub$.unsubscribe();
     this.loggedUser$.unsubscribe();
     this.selectedGuild$.unsubscribe();
+    this.currRole$.unsubscribe();
   }
   guildSelectorHandler() {
     this.isOpenGuildsormVisible = true;

@@ -1,5 +1,5 @@
 <div cdkDropListGroup class="boundary">
-  <div class="raidCards">
+  <div [class]="['raidCards',editable?'editable':'noneditable']">
     <div *ngFor="let raid of raidInfo; let i = index" class="listWrapper">
       <div class="listTitle">
         <p>{{ raid }}</p>

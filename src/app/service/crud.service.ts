@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Timestamp } from 'firebase/firestore';
-import { lastValueFrom, Observable, map, merge } from 'rxjs';
+import { lastValueFrom, Observable, map, BehaviorSubject } from 'rxjs';
 
 import { User } from '../shared/user.model';
 export interface GuildData {
@@ -79,6 +79,9 @@ export class CrudService {
       this.firestore.collection('guilds').doc('AllGuilds').get()
     );
   }
+  readUserOnce(userId) {
+    return lastValueFrom(this.firestore.collection('users').doc(userId).get());
+  }
   uploadUser(userId, data) {
     return this.firestore
       .collection('users')
@@ -92,18 +95,17 @@ export class CrudService {
       .valueChanges();
   }
   readGuildData(guildId: string) {
-    this.guildData$ = this.firestore
+    this.guildData$=this.firestore
       .collection('guilds')
-      .doc<GuildData>(guildId)
-      .valueChanges();
+      .doc<GuildData>(guildId).snapshotChanges().pipe(map(asd=> asd.payload.data()))
   }
   readUserGuilds(userId: string) {
     this.usersGuilds$ = this.firestore
       .collection('users')
       .doc(userId)
       .collection('guilds')
-      .doc<Guilds>('Guilds')
-      .valueChanges();
+      .doc<Guilds>('Guilds').valueChanges()
+      
   }
   readRaidsListData(guildId: string) {
     this.raids$ = this.firestore

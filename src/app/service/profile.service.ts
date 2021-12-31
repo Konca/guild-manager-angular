@@ -1,12 +1,14 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Timestamp } from 'firebase/firestore';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { User } from '../shared/user.model';
 import { CrudService, Guilds } from './crud.service';
+
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileService implements OnDestroy {
+  public selectedGuildRankGroup$ = new BehaviorSubject<string>('');
+  private selectedGuild: Subscription;
   public user$ = new BehaviorSubject<User>({
     Email: '',
     Discriminator: '',
@@ -24,7 +26,7 @@ export class ProfileService implements OnDestroy {
       Id: '',
       Name: '',
       Rank: '',
-      Server: ''
+      Server: '',
     },
   });
   private guilds: Subscription;
@@ -32,15 +34,20 @@ export class ProfileService implements OnDestroy {
   ngOnDestroy(): void {
     this.user.unsubscribe();
     this.guilds.unsubscribe();
+    this.selectedGuild.unsubscribe();
   }
   constructor(private crudService: CrudService) {}
 
-  getUserProfile() {
-    this.user = this.crudService.user$.subscribe((data) => {
+  async getUserProfile() {
+    this.user =  this.crudService.user$.subscribe((data) => {
       this.user$.next(data);
-    });
+   
     this.guilds = this.crudService.usersGuilds$.subscribe((data) => {
       this.guilds$.next(data);
     });
+    
+    this.selectedGuild = this.crudService.guildData$.subscribe((guild) => {
+      this.selectedGuildRankGroup$.next(guild.Roles[this.guilds$.value[guild.Id].Rank].Group);
+    }); });
   }
 }

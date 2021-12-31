@@ -10,7 +10,6 @@ import { LoginService } from '../service/login.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-
   faHome = faHome;
   faCaretDown = faCaretDown;
   faBars = faBars;
@@ -21,13 +20,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean;
   private logInChangeSub: Subscription;
 
-  constructor(
-    private loginService: LoginService,
-  ) {}
+  constructor(private loginService: LoginService) {}
 
   ngOnInit(): void {
-  
-
     this.logInChangeSub = this.loginService.loginStatusChanged.subscribe(
       (isUserLoggedIn) => {
         this.isLoggedIn = isUserLoggedIn;
@@ -53,11 +48,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   loginHandler() {
     if (this.isLoggedIn) this.loginService.loginStatusChanged.next(false);
-    else {
-      window.open(
-        'https://discord.com/api/oauth2/authorize?client_id=915190870083506197&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Fapi%2Fauth%2Fdiscord%2Fredirect&response_type=code&scope=identify%20email%20guilds%20guilds.members.read',
-        '_self'
-      );
-    }
+    else
+      this.loginService.autoLogin().then((result) => {
+        if (!result) {
+          window.open(
+            'https://discord.com/api/oauth2/authorize?client_id=915190870083506197&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Fapi%2Fauth%2Fdiscord%2Fredirect&response_type=code&scope=identify%20email%20guilds%20guilds.members.read',
+            '_self'
+          );
+        }
+      });
   }
 }

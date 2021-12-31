@@ -18,7 +18,12 @@
     </div>
     <div class="clientSettings">
       <p>Client Settings:</p>
-      {{ "Selected Guild: " + selectedGuild }}
+      {{
+        "Selected Guild: " +
+          selectedGuild +
+          " / Role in this guild:" +
+          roleInCurrGuild
+      }}
       <div class="changeButton">
         <app-std-button
           (click)="guildSelectorHandler()"
@@ -31,9 +36,20 @@
       </div>
     </div>
     <div *ngIf="guildDataRead" cdkDropListGroup class="boundary">
-      <p>Guild Settings:</p> <button (click)="saveToFirestore()">save</button>
+      <p>Guild Settings:</p>
+      <div class="changeButton">
+        <app-std-button
+          *ngIf="roleInCurrGuild === 'Admin'"
+          (click)="saveToFirestore()"
+          [buttonInfo]="{
+            text: 'Save',
+            style: 'submit',
+            type: 'button'
+          }"
+        ></app-std-button>
+      </div>
       <div class="ranks">
-        <div *ngFor="let role of roles, let i = index">
+        <div *ngFor="let role of roles; let i = index">
           <div class="listTitle">{{ role.GroupName }}</div>
           <ul
             class="rankList"
@@ -50,6 +66,7 @@
               cdkDrag
               [cdkDragData]="item.Group"
               cdkDragBoundary=".boundary"
+              [cdkDragDisabled]="roleInCurrGuild !== 'Admin'"
             >
               {{ item.Name }}
             </li>
