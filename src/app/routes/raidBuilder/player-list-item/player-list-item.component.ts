@@ -13,13 +13,8 @@ export class PlayerListItemComponent implements OnInit {
     Role: string;
     Spec: string;
     Status: string;
+    GuildRoleGroup:string
   };
-  class: string;
-  id: string;
-  name: string;
-  role: string;
-  spec: string;
-  status: string;
   constructor() {}
 
   ngOnInit(): void {

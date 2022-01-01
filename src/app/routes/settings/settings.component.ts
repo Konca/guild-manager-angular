@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CrudService, GuildData } from 'src/app/service/crud.service';
+import { CrudService } from 'src/app/service/crud.service';
 import { LoginService } from 'src/app/service/login.service';
 import { ProfileService } from 'src/app/service/profile.service';
 import { User } from 'src/app/shared/user.model';
@@ -25,6 +25,7 @@ export class SettingsComponent implements OnInit {
   private selectedGuild$: Subscription;
   private currRole$: Subscription;
   roleInCurrGuild: string;
+  anyChanges: boolean;
   isLoggedIn: boolean;
   user: User;
   userName: string;
@@ -41,6 +42,7 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.guildDataRead = false;
+    this.anyChanges = false;
     this.logInChangeSub$ = this.loginService.loginStatusChanged.subscribe(
       (isUserLoggedIn) => {
         this.isLoggedIn = isUserLoggedIn;
@@ -53,16 +55,19 @@ export class SettingsComponent implements OnInit {
         this.selectedGuild = user.SelectedGuildName;
         this.selectedGId = user.SelectedGuildId;
         this.crudService.readGuildData(user.SelectedGuildId);
-     
-      this.currRole$ = this.profileService.selectedGuildRankGroup$.subscribe(
-        (rank) => (this.roleInCurrGuild = rank)
-      );
-      if (this.selectedGId) {
-        this.selectedGuild$ = this.crudService.guildData$.subscribe((guild) => {
-          this.roles = this.sortHierarchy(guild.Roles);
-          this.guildDataRead = true;
-        });
-      } });
+
+        this.currRole$ = this.profileService.selectedGuildRankGroup$.subscribe(
+          (rank) => (this.roleInCurrGuild = rank)
+        );
+        if (this.selectedGId) {
+          this.selectedGuild$ = this.crudService.guildData$.subscribe(
+            (guild) => {
+              this.roles = this.sortHierarchy(guild.Roles);
+              this.guildDataRead = true;
+            }
+          );
+        }
+      });
     }
   }
 
@@ -82,6 +87,7 @@ export class SettingsComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+      this.anyChanges = true;
       event.container.data[event.currentIndex]['Group'] = event.container.id;
     }
   }

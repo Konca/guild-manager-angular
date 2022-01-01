@@ -2,8 +2,14 @@
   <div [class]="['raidCards',editable?'editable':'noneditable']">
     <div *ngFor="let raid of raidInfo; let i = index" class="listWrapper">
       <div class="listTitle">
+        
+        <!-- <button class="optionsButton" [id]="'raidOptions-'+i" (click)="openRaidOptionsHandler($event)">
+        <fa-icon [icon]="faWrench"></fa-icon>
+      </button> -->
+
+
         <p>{{ raid }}</p>
-        <span>{{ raidGroups[i].length }}</span>
+        <span>{{ !!raidGroups[i]?raidGroups[i].length:0 }}</span>
       </div>
       <ul
         class="playerList"
@@ -28,6 +34,7 @@
   <div class="raidCards">
     <div *ngFor="let classList of classes; let i = index" class="listWrapper">
       <div class="listTitle">
+        
         <p>{{ classInfo[i].Name }}</p>
         <span>{{ classList.length }}</span>
       </div>
@@ -80,3 +87,11 @@
     </div>
   </div>
 </div>
+<app-form-container
+  [title]="'Raid Options'"
+  type="RaidOptions"
+  *ngIf="showRaidOptions"
+  [raidName]="raidName"
+  (closeForm)="closeRaidOptionsHandler()"
+>
+</app-form-container>

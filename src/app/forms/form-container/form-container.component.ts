@@ -18,6 +18,7 @@ export class FormContainerComponent implements OnInit {
   formValid: boolean;
   @ViewChild('thisform') thisForm: NgForm;
   @ViewChild('childForm') childForm: any; //any for reusability 
+  @Input() raidName:string
   @Input() type: string;
   @Input() title: string;
   @Output() closeForm = new EventEmitter();

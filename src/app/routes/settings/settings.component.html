@@ -3,7 +3,7 @@
     <h3>Please Log In to view this page</h3>
   </div>
   <div *ngIf="isLoggedIn">
-    <div class="titleWrapper">
+    <div class="settingsSegment">
       <h3>{{ "Profile: " + userName }}</h3>
       <div class="logoutButton">
         <app-std-button
@@ -16,14 +16,17 @@
         ></app-std-button>
       </div>
     </div>
-    <div class="clientSettings">
+    <div class="settingsSegment">
       <p>Client Settings:</p>
-      {{
-        "Selected Guild: " +
-          selectedGuild +
-          " / Role in this guild:" +
-          roleInCurrGuild
-      }}
+      <div class="clientGrid">
+       Selected Guild:  <div>{{"&lt;"+selectedGuild+"&gt;"}}</div>
+      </div>
+      <div class="clientGrid">
+       
+          {{ "Role in this guild:" }} <div>
+          <span [class]="[roleInCurrGuild, 'currRoleIcon']"></span>
+        </div>
+      </div>
       <div class="changeButton">
         <app-std-button
           (click)="guildSelectorHandler()"
@@ -35,7 +38,11 @@
         ></app-std-button>
       </div>
     </div>
-    <div *ngIf="guildDataRead" cdkDropListGroup class="boundary">
+    <div
+      *ngIf="guildDataRead"
+      cdkDropListGroup
+      class="boundary settingsSegment"
+    >
       <p>Guild Settings:</p>
       <div class="changeButton">
         <app-std-button
@@ -46,11 +53,15 @@
             style: 'submit',
             type: 'button'
           }"
+          [disabled]="!anyChanges"
         ></app-std-button>
       </div>
       <div class="ranks">
         <div *ngFor="let role of roles; let i = index">
-          <div class="listTitle">{{ role.GroupName }}</div>
+          <div class="listTitle">
+            {{ role.GroupName
+            }}<span [class]="[role.GroupName, 'roleIcon']"></span>
+          </div>
           <ul
             class="rankList"
             cdkDropList

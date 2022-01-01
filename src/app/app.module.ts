@@ -24,10 +24,11 @@ import { RaidListComponent } from './routes/raidBuilder/raid-list/raid-list.comp
 import { PlayerListItemComponent } from './routes/raidBuilder/player-list-item/player-list-item.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RedirectComponent } from './discord/redirect/redirect.component';
+import { environment } from 'src/environments/environment';
 
-import config from '../assets/apiKeys/firebaseKey.json';
 import { SettingsComponent } from './routes/settings/settings.component';
 import { OpenGuildComponent } from './forms/open-guild/open-guild.component';
+import { EditRaidInfoComponent } from './forms/edit-raid-info/edit-raid-info.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -56,6 +57,7 @@ const appRoutes: Routes = [
     PlayerListItemComponent,
     SettingsComponent,
     OpenGuildComponent,
+    EditRaidInfoComponent,
   ],
   imports: [
     DragDropModule,
@@ -63,7 +65,7 @@ const appRoutes: Routes = [
     AppRoutingModule,
     FontAwesomeModule,
     RouterModule.forRoot(appRoutes),
-    AngularFireModule.initializeApp(config),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     FormsModule,
   ],

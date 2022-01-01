@@ -6,29 +6,22 @@
   width: 90vw;
   color: white;
 }
-.clientSettings {
+.settingsSegment {
   border: 1px solid white;
-  border-width: 1px 0;
+  border-width: 0 0 1px 0;
+  width: 100%;
+  position: relative;
 }
 h3 {
   text-align: center;
   font-size: 2rem;
 }
 p {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
 }
+
+.logoutButton,
 .changeButton {
-  display: inline-block;
-  width: fit-content;
-  min-width: 6rem;
-  height: 2rem;
-  margin: 5px;
-}
-.titleWrapper {
-  width: 100%;
-  position: relative;
-}
-.logoutButton {
   position: absolute;
   top: -10px;
   right: 20px;
@@ -36,10 +29,15 @@ p {
   min-width: 6rem;
   height: 3rem;
 }
-.ranks{
+.changeButton {
+  display: inline-block;
+  width: fit-content;
+  min-width: 6rem;
+}
+.ranks {
   display: flex;
 }
-.ranks>div{
+.ranks > div {
   margin: 0 auto;
 }
 .rankList {
@@ -48,7 +46,7 @@ p {
   font-weight: bold;
   max-width: 20rem;
   min-width: 10rem;
-  padding: 0.33rem 0.33rem 2rem 0.33rem ;
+  padding: 0.33rem 0.33rem 2rem 0.33rem;
   min-height: 5rem;
   list-style-type: none;
 }
@@ -68,4 +66,67 @@ p {
   border: 1px solid #00000020;
   padding: 5px;
   border-radius: 5px;
+}
+
+.Rookie {
+  margin-left: 5px;
+  border-radius: 15px;
+  background-image: url("../../../assets/images/rookie.png");
+}
+.Raider {
+  margin-left: 5px;
+  border-radius: 15px;
+  background-image: url("../../../assets/images/social.png");
+}
+.Veteran {
+  margin-left: 5px;
+  border-radius: 15px;
+  background-image: url("../../../assets/images/vet.png");
+}
+.Admin {
+  margin-left: 5px;
+  border-radius: 15px;
+  background-image: url("../../../assets/images/offi.png");
+}
+.roleIcon {
+  background-size: 25px;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  right: 15px;
+  top: 7.5px;
+}
+.clientGrid {
+  background-color: #00000090;
+  text-align: center;
+  display: inline-block;
+  min-height: 40px;
+  
+  max-height: 80px;
+  height: fit-content;
+  border-radius: 8px;
+  width: 30%;
+  margin:  0 8.5% 10px 8.5% ;
+  font-size: 1.33em;
+  padding: 10px;
+  overflow: hidden;
+}
+.clientGrid > div {
+  position: relative;
+  width: fit-content;
+  height: 60px;
+  margin: 10px auto;
+}
+.clientGrid > div >span {
+  background-size: 40px;
+  width: 40px;
+  height: 40px;
+  display: block;
+
+}
+
+@media (max-width: 1000px){
+  .clientGrid{
+    width: 90%;
+  margin: 0 3% 10px 3%;}
 }

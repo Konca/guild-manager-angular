@@ -22,42 +22,44 @@ export class RaidBuilderComponent implements OnInit, OnDestroy {
   isAdmin: boolean;
   private logInChangeSub: Subscription;
   private roleChange: Subscription;
+  private routeParams: Subscription;
+  anyChanges: boolean;
   guildId: string;
   raidId: string;
   sortedRaids: {};
   raidFoundStatus: number;
-  raidDsc: { Name: string; Description: string; DateTime: Date };
+  raidDsc: {
+    Name: string;
+    Description: string;
+    DateTime: Date;
+    CreatorId: string;
+  };
   editable: boolean;
   scrollable: boolean;
 
   ngOnInit(): void {
-    this.scrollable = true;
-    this.editable = false;
-    this.isAdmin = false;
-    this.raidFoundStatus = 0;
-
-    this.route.params.subscribe((params: Params) => {
+    this.routeParams = this.route.params.subscribe((params: Params) => {
+      this.scrollable = true;
+      this.editable = false;
+      this.isAdmin = false;
+      this.anyChanges = false;
       this.raidFoundStatus = 0;
       this.guildId = params['guildId'];
       this.raidId = params['raidId'];
       this.loadRaid(this.guildId, this.raidId);
-
-      this.logInChangeSub = this.loginService.loginStatusChanged.subscribe(
-        () => {
-          this.crudService.readGuildData(this.guildId);
-          this.roleChange =
-            this.profileService.selectedGuildRankGroup$.subscribe((rankGrp) => {
-              this.isAdmin = rankGrp === 'Admin';
-            });
-        }
-      );
     });
   }
   ngOnDestroy(): void {
     this.logInChangeSub.unsubscribe();
     this.roleChange.unsubscribe();
+    this.routeParams.unsubscribe();
   }
-
+  addRaidHandler() {
+    this.raidList.addRaidHandler();
+  }
+  changeAnyChanges(val: boolean) {
+    this.anyChanges = val;
+  }
   loadRaid(guildId, raidId) {
     this.getRaids(guildId, raidId).then((raidData) => {
       if (raidData !== undefined) {
@@ -66,8 +68,26 @@ export class RaidBuilderComponent implements OnInit, OnDestroy {
           Name: raidData['Name'],
           Description: raidData['Description'],
           DateTime: raidData['Date'].toDate(),
+          CreatorId: raidData['CreatorId'],
         };
         this.sortedRaids = raidData['SortedRaids'];
+        this.logInChangeSub = this.loginService.loginStatusChanged.subscribe(
+          () => {
+            this.crudService.readGuildData(this.guildId);
+            this.roleChange =
+              this.profileService.selectedGuildRankGroup$.subscribe(
+                (rankGrp) => {
+                  if (rankGrp === 'Admin') this.isAdmin = true;
+                  if (
+                    !!this.raidDsc &&
+                    this.profileService.user$.value.Id ===
+                      this.raidDsc.CreatorId
+                  )
+                    this.isAdmin = true;
+                }
+              );
+          }
+        );
       } else {
         this.raidFoundStatus = 404;
       }
@@ -78,6 +98,7 @@ export class RaidBuilderComponent implements OnInit, OnDestroy {
   }
   editHandler() {
     this.editable = true;
+    this.raidList.refreshPlayerRoles();
   }
 
   getRaids(guildId: string, raidId: string) {

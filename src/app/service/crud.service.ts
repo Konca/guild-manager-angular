@@ -7,7 +7,7 @@ import { User } from '../shared/user.model';
 export interface GuildData {
   Id: string;
   Name: string;
-  Roles: { Id: string; Name: string }[];
+  Roles: {[roleid:string]:{ Id: string; Name: string;Group:string }};
   Server: string;
 }
 export interface Guild {
@@ -42,7 +42,7 @@ export interface SortedRaids {
     };
   };
 }
-
+export interface GuildMembers{[memberId:string]:{Id:string,Name:string,Role:string}}
 @Injectable({
   providedIn: 'root',
 })
@@ -62,7 +62,7 @@ export class CrudService {
         .collection('guilds')
         .doc(guildId)
         .collection('members')
-        .doc('AllMembers')
+        .doc<GuildMembers>('AllMembers')
         .get()
     );
   }

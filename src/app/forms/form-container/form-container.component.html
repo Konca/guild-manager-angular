@@ -21,7 +21,13 @@
       [guildObj]="thisform.value.selectedGuild"
       #childForm
     ></app-open-guild>
-      
+    <app-edit-raid-info
+    *ngIf="type == 'RaidOptions'"
+    [isFormValid]="thisform.valid"
+    [raidObj]="thisform.value.raidName"
+    [raidName]="raidName"
+    #childForm
+  ></app-edit-raid-info>
     </div>
     <div class="formFooter">
       <div class="buttonsWrapper">

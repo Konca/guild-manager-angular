@@ -10,9 +10,6 @@ export class AppComponent implements OnInit {
   title = 'guild-manager-angular';
   constructor(private location: Location, private router: Router) {}
   ngOnInit(): void {
-    window.onpopstate = () => {
-      window.history.forward();
-    };
     if (
       this.location.path().split('?')[0] !== '/api/auth/discord/redirect' &&
       this.location.path().split('/')[1] !== 'raidBuilder'

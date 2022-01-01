@@ -24,12 +24,12 @@
     border-radius: 15px;
     background-image: url("../../../../assets/images/pug.png");
   }
-  .Riled-Rookie .rankIcon {
+  .Rookie .rankIcon {
     margin-left: 5px;
     border-radius: 15px;
     background-image: url("../../../../assets/images/rookie.png");
   }
-  .Sulky-Social .rankIcon {
+  .Raider .rankIcon {
     margin-left: 5px;
     border-radius: 15px;
     background-image: url("../../../../assets/images/social.png");
@@ -39,7 +39,7 @@
     border-radius: 15px;
     background-image: url("../../../../assets/images/vet.png");
   }
-  .Enraged-Officer .rankIcon {
+  .Admin .rankIcon {
     margin-left: 5px;
     border-radius: 15px;
     background-image: url("../../../../assets/images/offi.png");

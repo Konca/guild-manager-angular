@@ -1,0 +1,13 @@
+<fieldset ngModelGroup="selectedGuild"><label>Bla</label>
+    <div class="tableContainer">
+        <input 
+        [name]="'raidName'"
+        [value]="raidObj.raidName">
+        <div  class="removeButton">
+            <app-std-button
+              (click)="removeRaid()"
+              [buttonInfo]="{ text: 'Remove this Raid Team', style: 'close', type: 'button' }"
+            ></app-std-button>
+          </div>
+    </div>
+    </fieldset>

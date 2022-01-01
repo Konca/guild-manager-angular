@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Timestamp } from 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
 
-import disc from '../../assets/apiKeys/discordKey.json';
+import { environment } from 'src/environments/environment';
 import { CrudService } from './crud.service';
 import { ProfileService } from './profile.service';
 import { User } from '../shared/user.model';
@@ -48,11 +48,11 @@ export class LoginService {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
-        client_id: disc.DISCORD_OAUTH_CLIENT_ID,
-        client_secret: disc.DISCORD_OAUTH_SECRET,
+        client_id: environment.discord.DISCORD_OAUTH_CLIENT_ID,
+        client_secret: environment.discord.DISCORD_OAUTH_SECRET,
         grant_type: grant,
         [refresh ? 'refresh_token' : 'code']: code,
-        redirect_uri: disc.DISCORD_REDIRECT_URL,
+        redirect_uri: environment.discord.DISCORD_REDIRECT_URL,
       }).toString(),
     };
     return fetch('https://discord.com/api/oauth2/token', options).then(
